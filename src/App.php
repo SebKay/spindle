@@ -21,11 +21,17 @@ class App
         $this->setupApp();
     }
 
+    /**
+     * Add middleware
+     */
     protected function addMiddleware(): void
     {
         $this->slim->add(new ExampleMiddleware());
     }
 
+    /**
+     * Define routes
+     */
     protected function addRoutes(): void
     {
         $this->slim->get('/', function (ServerRequestInterface $request, ResponseInterface $response, array $args) {
@@ -34,17 +40,29 @@ class App
         });
     }
 
+    /**
+     * Setup the app (called in the constructor)
+     */
     protected function setupApp(): void
     {
         $this->addMiddleware();
         $this->addRoutes();
     }
 
+    /**
+     * Hanndle a request object
+     *
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->slim->handle($request);
     }
 
+    /**
+     * Handle the global request and run the app
+     */
     public function run(): void
     {
         $this->slim->run();

@@ -17,5 +17,13 @@
     "require": {
         "slim/slim": "^4.6",
         "slim/psr7": "^1.2"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "scripts": {
+        "refresh": "git clean -xffd && composer install --ansi",
+        "phpcs": "./vendor/bin/phpcs --standard=PSR12 src",
+        "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 src"
     }
 }

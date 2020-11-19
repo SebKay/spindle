@@ -13,6 +13,11 @@
             "App\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "minimum-stability": "stable",
     "require": {
         "slim/slim": "^4.6",
@@ -20,12 +25,16 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
-        "vimeo/psalm": "^4.1"
+        "vimeo/psalm": "^4.1",
+        "phpunit/phpunit": "^9.4"
     },
     "scripts": {
         "refresh": "git clean -xffd && composer install --ansi",
         "phpcs": "./vendor/bin/phpcs --standard=PSR12 src",
         "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 src",
-        "psalm": "./vendor/bin/psalm --show-info=true"
+        "psalm": "./vendor/bin/psalm --show-info=true",
+        "phpunit": "./vendor/bin/phpunit --colors=always tests",
+        "phpunit:testdox": "@phpunit --testdox",
+        "phpunit:coverage": "@phpunit --coverage-html coverage"
     }
 }

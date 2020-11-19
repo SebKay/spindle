@@ -1,1 +1,6 @@
+# Directories
 /vendor/
+/coverage/
+
+# Files
+.phpunit.result.cache

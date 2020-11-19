@@ -28,7 +28,7 @@ class App
 
     protected function addRoutes(): void
     {
-        $this->slim->get('/', function (ServerRequestInterface $request, ResponseInterface $response, $args) {
+        $this->slim->get('/', function (ServerRequestInterface $request, ResponseInterface $response, array $args) {
             $response->getBody()->write('Hello world!');
             return $response;
         });

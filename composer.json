@@ -8,6 +8,11 @@
             "email": "seb@sebkay.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "SS\\": "src/"
+        }
+    },
     "minimum-stability": "stable",
     "require": {
         "slim/slim": "^4.6",

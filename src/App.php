@@ -14,6 +14,9 @@ class App
      */
     protected $slim;
 
+    /**
+     * Set up
+     */
     public function __construct()
     {
         $this->slim = AppFactory::create();
@@ -62,6 +65,8 @@ class App
 
     /**
      * Handle the global request and run the app
+     * 
+     * @codeCoverageIgnore
      */
     public function run(): void
     {

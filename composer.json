@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "SS\\": "src/"
+            "App\\": "src/"
         }
     },
     "minimum-stability": "stable",

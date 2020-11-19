@@ -1,7 +1,8 @@
 <?php
 
-namespace SS;
+namespace App;
 
+use App\Middleware\ExampleMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
@@ -19,7 +20,12 @@ class App
 
         $this->setupApp();
     }
-    
+
+    protected function addMiddleware(): void
+    {
+        $this->slim->add(new ExampleMiddleware());
+    }
+
     protected function addRoutes(): void
     {
         $this->slim->get('/', function (ServerRequestInterface $request, ResponseInterface $response, $args) {
@@ -30,6 +36,7 @@ class App
 
     protected function setupApp(): void
     {
+        $this->addMiddleware();
         $this->addRoutes();
     }
 

@@ -13,11 +13,6 @@ class ExampleMiddlewareTest extends Test
 {
     use ServerTestTrait;
 
-    public function setUp(): void
-    {
-        //
-    }
-
     /**
      * @testdox It returns a valid response when called
      */

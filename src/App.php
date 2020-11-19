@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Middleware\ExampleMiddleware;
+use App\Handlers\HttpErrorHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
@@ -43,6 +44,18 @@ class App
         });
     }
 
+    protected function addErrorMiddleware()
+    {
+        $this->slim
+            ->addErrorMiddleware(true, false, false)
+            ->setDefaultErrorHandler(
+                new HttpErrorHandler(
+                    $this->slim->getCallableResolver(),
+                    $this->slim->getResponseFactory()
+                )
+            );
+    }
+
     /**
      * Setup the app (called in the constructor)
      */
@@ -50,6 +63,9 @@ class App
     {
         $this->addMiddleware();
         $this->addRoutes();
+
+        $this->slim->addRoutingMiddleware();
+        $this->addErrorMiddleware();
     }
 
     /**
@@ -65,7 +81,7 @@ class App
 
     /**
      * Handle the global request and run the app
-     * 
+     *
      * @codeCoverageIgnore
      */
     public function run(): void

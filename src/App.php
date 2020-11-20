@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Dependencies\View;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
 use App\Handlers\ShutdownHandler;
+use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
@@ -15,7 +17,12 @@ class App
     /**
      * @var boolean
      */
-    protected $display_errors;
+    protected $dev_mode;
+
+    /**
+     * @var Container
+     */
+    protected $container;
 
     /**
      * @var \Slim\App
@@ -32,11 +39,29 @@ class App
      */
     public function __construct()
     {
-        $this->display_errors = ($_ENV['APP_ENV'] == 'development' ? true : false);
+        $this->dev_mode = ($_ENV['APP_ENV'] == 'development' ? true : false);
 
-        $this->slim = AppFactory::create();
+        $this->container = new Container();
+
+        $this->setupContainer();
+
+        $this->slim = AppFactory::createFromContainer($this->container);
 
         $this->setupApp();
+    }
+
+    /**
+     * Set up the container (called in the constructor)
+     */
+    protected function setupContainer(): void
+    {
+        //---- View
+        $this->container->set('View', function () {
+            return new View(
+                __DIR__ . '/../resources/views',
+                ($this->dev_mode ? '' : '.cache/views')
+            );
+        });
     }
 
     /**
@@ -52,10 +77,7 @@ class App
      */
     protected function addRoutes(): void
     {
-        $this->slim->get('/', function (ServerRequestInterface $request, ResponseInterface $response, array $args) {
-            $response->getBody()->write('Hello world!');
-            return $response;
-        });
+        require_once __DIR__ . '/../inc/routes/web.php';
     }
 
     /**
@@ -69,7 +91,7 @@ class App
         );
 
         $this->slim
-            ->addErrorMiddleware($this->display_errors, false, false)
+            ->addErrorMiddleware($this->dev_mode, false, false)
             ->setDefaultErrorHandler($this->error_handler);
     }
 
@@ -81,7 +103,7 @@ class App
         $serverRequestCreator = ServerRequestCreatorFactory::create();
         $request              = $serverRequestCreator->createServerRequestFromGlobals();
 
-        $shutdownHandler = new ShutdownHandler($request, $this->error_handler, $this->display_errors);
+        $shutdownHandler = new ShutdownHandler($request, $this->error_handler, $this->dev_mode);
 
         \register_shutdown_function($shutdownHandler);
     }

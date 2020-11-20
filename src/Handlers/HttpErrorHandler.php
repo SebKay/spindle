@@ -2,6 +2,7 @@
 
 namespace App\Handlers;
 
+use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
@@ -28,15 +29,23 @@ class HttpErrorHandler extends ErrorHandler
     public const UNAUTHENTICATED         = 'UNAUTHENTICATED';
 
     /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * @param Container                 $container
      * @param CallableResolverInterface $callableResolver
      * @param ResponseFactoryInterface  $responseFactory
      * @param LoggerInterface|null      $logger
      */
     public function __construct(
+        Container $container,
         CallableResolverInterface $callableResolver,
         ResponseFactoryInterface $responseFactory,
         ?LoggerInterface $logger = null
     ) {
+        $this->container           = $container;
         $this->callableResolver    = $callableResolver;
         $this->responseFactory     = $responseFactory;
         $this->logger              = $logger ?: $this->getDefaultLogger();
@@ -94,8 +103,15 @@ class HttpErrorHandler extends ErrorHandler
         ];
 
         $response = $this->responseFactory->createResponse($statusCode);
-        $response->getBody()->write(json_encode($error, JSON_PRETTY_PRINT));
+        // $response->getBody()->write(json_encode($error, JSON_PRETTY_PRINT));
 
-        return $response;
+        return $this->container->get('View')->respond(
+            $response,
+            'http-error.twig',
+            [
+                'code'        => $statusCode,
+                'description' => $description,
+            ]
+        );
     }
 }

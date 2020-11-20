@@ -4,15 +4,12 @@ namespace Tests\Unit\Middleware;
 
 use App\Middleware\ExampleMiddleware;
 use Slim\Factory\AppFactory;
-use Tests\ServerTestTrait;
 use Tests\Unit\Test;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ExampleMiddlewareTest extends Test
 {
-    use ServerTestTrait;
-
     /**
      * @testdox It returns a valid response when called
      */

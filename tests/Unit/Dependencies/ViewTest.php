@@ -4,13 +4,10 @@ namespace Tests\Unit\Middleware;
 
 use App\App;
 use App\Dependencies\View;
-use Tests\ServerTestTrait;
 use Tests\Unit\Test;
 
 class ViewTest extends Test
 {
-    use ServerTestTrait;
-
     /**
      * @testdox It returns a string when rendering
      */

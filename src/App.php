@@ -86,6 +86,7 @@ class App
     protected function addErrorHandler(): void
     {
         $this->error_handler = new HttpErrorHandler(
+            $this->container,
             $this->slim->getCallableResolver(),
             $this->slim->getResponseFactory()
         );

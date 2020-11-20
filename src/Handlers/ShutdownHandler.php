@@ -2,7 +2,6 @@
 
 namespace App\Handlers;
 
-use App\Handlers\HttpErrorHandler;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\ResponseEmitter;
@@ -33,8 +32,8 @@ class ShutdownHandler
      */
     public function __construct(Request $request, HttpErrorHandler $errorHandler, bool $displayErrorDetails)
     {
-        $this->request = $request;
-        $this->errorHandler = $errorHandler;
+        $this->request             = $request;
+        $this->errorHandler        = $errorHandler;
         $this->displayErrorDetails = $displayErrorDetails;
     }
 
@@ -42,11 +41,11 @@ class ShutdownHandler
     {
         $error = error_get_last();
         if ($error) {
-            $errorFile = $error['file'];
-            $errorLine = $error['line'];
+            $errorFile    = $error['file'];
+            $errorLine    = $error['line'];
             $errorMessage = $error['message'];
-            $errorType = $error['type'];
-            $message = 'An error while processing your request. Please try again later.';
+            $errorType    = $error['type'];
+            $message      = 'An error while processing your request. Please try again later.';
 
             if ($this->displayErrorDetails) {
                 switch ($errorType) {
@@ -71,7 +70,7 @@ class ShutdownHandler
             }
 
             $exception = new HttpInternalServerErrorException($this->request, $message);
-            $response = $this->errorHandler->__invoke(
+            $response  = $this->errorHandler->__invoke(
                 $this->request,
                 $exception,
                 $this->displayErrorDetails,

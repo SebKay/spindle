@@ -13,6 +13,9 @@ use Slim\Exception\HttpUnauthorizedException;
 use Slim\Handlers\ErrorHandler;
 use Exception;
 use Throwable;
+use Slim\Interfaces\CallableResolverInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Log\LoggerInterface;
 
 class HttpErrorHandler extends ErrorHandler
 {
@@ -23,6 +26,24 @@ class HttpErrorHandler extends ErrorHandler
     public const RESOURCE_NOT_FOUND      = 'RESOURCE_NOT_FOUND';
     public const SERVER_ERROR            = 'SERVER_ERROR';
     public const UNAUTHENTICATED         = 'UNAUTHENTICATED';
+
+    /**
+     * @param CallableResolverInterface $callableResolver
+     * @param ResponseFactoryInterface  $responseFactory
+     * @param LoggerInterface|null      $logger
+     */
+    public function __construct(
+        CallableResolverInterface $callableResolver,
+        ResponseFactoryInterface $responseFactory,
+        ?LoggerInterface $logger = null
+    ) {
+        $this->callableResolver    = $callableResolver;
+        $this->responseFactory     = $responseFactory;
+        $this->logger              = $logger ?: $this->getDefaultLogger();
+        $this->displayErrorDetails = false;
+        $this->logErrors           = false;
+        $this->logErrorDetails     = false;
+    }
 
     /**
      * Handle the request
@@ -38,7 +59,7 @@ class HttpErrorHandler extends ErrorHandler
         $description = 'An internal error has occurred while processing your request.';
 
         if ($exception instanceof HttpException) {
-            $statusCode  = $exception->getCode();
+            $statusCode  = (int) $exception->getCode();
             $description = $exception->getMessage();
 
             if ($exception instanceof HttpNotFoundException) {

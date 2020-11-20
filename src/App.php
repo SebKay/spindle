@@ -39,7 +39,7 @@ class App
      */
     public function __construct()
     {
-        $this->dev_mode = ($_ENV['APP_ENV'] == 'development' ? true : false);
+        $this->dev_mode = (getenv('APP_ENV') == 'development' ? true : false);
 
         $this->container = new Container();
 

@@ -29,9 +29,7 @@ class View
     {
         $this->loader = new \Twig\Loader\FilesystemLoader($templates_path);
 
-        if ($cache_path != '') {
-            $this->twig_args['cache'] = $cache_path;
-        }
+        $this->twig_args['cache'] = ($cache_path != '' ? $cache_path : false);
 
         $this->twig = new \Twig\Environment($this->loader, $this->twig_args);
     }
@@ -43,7 +41,7 @@ class View
      * @param array $args
      * @return string
      */
-    public function render(string $name, array $args): string
+    public function render(string $name, array $args = []): string
     {
         return $this->twig->render($name, $args);
     }

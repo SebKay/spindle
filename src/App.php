@@ -9,6 +9,7 @@ use App\Handlers\ShutdownHandler;
 use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -39,7 +40,7 @@ class App
      */
     public function __construct()
     {
-        $this->dev_mode = (getenv('APP_ENV') == 'development' ? true : false);
+        $this->dev_mode = (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] == 'development' ? true : false);
 
         $this->container = new Container();
 
@@ -62,6 +63,11 @@ class App
                 ($this->dev_mode ? '' : '.cache/views')
             );
         });
+
+        //---- CSRF protection
+        $this->container->set('csrf', function () {
+            return new Guard($this->slim->getResponseFactory());
+        });
     }
 
     /**
@@ -69,6 +75,7 @@ class App
      */
     protected function addMiddleware(): void
     {
+        $this->slim->add('csrf');
         $this->slim->add(new ExampleMiddleware());
     }
 

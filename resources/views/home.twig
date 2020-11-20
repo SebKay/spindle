@@ -1,1 +1,25 @@
 Welcome, {{ name }}!
+
+<form method="post" action="">
+    <p>
+        <label for="name">
+            Name
+        </label>
+        <br>
+        <input id="name" type="text" name="name">
+        <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
+        <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
+    </p>
+
+    <p>
+        <button>
+            Submit
+        </button>
+    </p>
+</form>
+
+{% if form.name %}
+    <p>
+        Your name is: <strong>{{ form.name }}</strong>
+    </p>
+{% endif %}

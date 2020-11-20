@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Dependencies\Test;
+use App\Dependencies\View;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
 use App\Handlers\ShutdownHandler;
@@ -17,7 +17,7 @@ class App
     /**
      * @var boolean
      */
-    protected $display_errors;
+    protected $dev_mode;
 
     /**
      * @var Container
@@ -39,7 +39,7 @@ class App
      */
     public function __construct()
     {
-        $this->display_errors = ($_ENV['APP_ENV'] == 'development' ? true : false);
+        $this->dev_mode = ($_ENV['APP_ENV'] == 'development' ? true : false);
 
         $this->container = new Container();
 
@@ -55,8 +55,12 @@ class App
      */
     protected function setupContainer(): void
     {
-        $this->container->set('Test', function() {
-            return new Test;
+        //---- View
+        $this->container->set('View', function () {
+            return new View(
+                __DIR__ . '/../resources/views',
+                ($this->dev_mode ? '' : '.cache/views')
+            );
         });
     }
 
@@ -73,7 +77,7 @@ class App
      */
     protected function addRoutes(): void
     {
-        require_once '../inc/routes/web.php';
+        require_once __DIR__ . '/../inc/routes/web.php';
     }
 
     /**
@@ -87,7 +91,7 @@ class App
         );
 
         $this->slim
-            ->addErrorMiddleware($this->display_errors, false, false)
+            ->addErrorMiddleware($this->dev_mode, false, false)
             ->setDefaultErrorHandler($this->error_handler);
     }
 
@@ -99,7 +103,7 @@ class App
         $serverRequestCreator = ServerRequestCreatorFactory::create();
         $request              = $serverRequestCreator->createServerRequestFromGlobals();
 
-        $shutdownHandler = new ShutdownHandler($request, $this->error_handler, $this->display_errors);
+        $shutdownHandler = new ShutdownHandler($request, $this->error_handler, $this->dev_mode);
 
         \register_shutdown_function($shutdownHandler);
     }

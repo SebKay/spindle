@@ -1,6 +1,7 @@
 # Directories
 /vendor/
 /coverage/
+.cache/
 
 # Files
 .phpunit.result.cache

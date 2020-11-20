@@ -4,3 +4,4 @@
 
 # Files
 .phpunit.result.cache
+.env

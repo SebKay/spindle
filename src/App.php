@@ -13,6 +13,11 @@ use Slim\Factory\ServerRequestCreatorFactory;
 class App
 {
     /**
+     * @var boolean
+     */
+    protected $display_errors;
+
+    /**
      * @var \Slim\App
      */
     protected $slim;
@@ -27,6 +32,8 @@ class App
      */
     public function __construct()
     {
+        $this->display_errors = ($_ENV['APP_ENV'] == 'development' ? true : false);
+
         $this->slim = AppFactory::create();
 
         $this->setupApp();
@@ -62,7 +69,7 @@ class App
         );
 
         $this->slim
-            ->addErrorMiddleware(true, false, false)
+            ->addErrorMiddleware($this->display_errors, false, false)
             ->setDefaultErrorHandler($this->error_handler);
     }
 
@@ -74,7 +81,7 @@ class App
         $serverRequestCreator = ServerRequestCreatorFactory::create();
         $request              = $serverRequestCreator->createServerRequestFromGlobals();
 
-        $shutdownHandler = new ShutdownHandler($request, $this->error_handler, false);
+        $shutdownHandler = new ShutdownHandler($request, $this->error_handler, $this->display_errors);
 
         \register_shutdown_function($shutdownHandler);
     }

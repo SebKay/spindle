@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Handlers;
 
 use App\Handlers\HttpErrorHandler;
@@ -30,7 +31,8 @@ class ShutdownHandler
      * @param HttpErrorHandler  $errorHandler
      * @param bool              $displayErrorDetails
      */
-    public function __construct(Request $request, HttpErrorHandler $errorHandler, bool $displayErrorDetails) {
+    public function __construct(Request $request, HttpErrorHandler $errorHandler, bool $displayErrorDetails)
+    {
         $this->request = $request;
         $this->errorHandler = $errorHandler;
         $this->displayErrorDetails = $displayErrorDetails;
@@ -69,10 +71,16 @@ class ShutdownHandler
             }
 
             $exception = new HttpInternalServerErrorException($this->request, $message);
-            $response = $this->errorHandler->__invoke($this->request, $exception, $this->displayErrorDetails, false, false);
-            
+            $response = $this->errorHandler->__invoke(
+                $this->request,
+                $exception,
+                $this->displayErrorDetails,
+                false,
+                false
+            );
+
             if (ob_get_length()) {
-              ob_clean();
+                ob_clean();
             }
 
             $responseEmitter = new ResponseEmitter();

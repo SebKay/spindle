@@ -2,6 +2,8 @@
 
 namespace App\Dependencies;
 
+use Psr\Http\Message\ResponseInterface;
+
 class View
 {
     /**
@@ -44,5 +46,22 @@ class View
     public function render(string $name, array $args = []): string
     {
         return $this->twig->render($name, $args);
+    }
+
+    /**
+     * Write a Twig view to the response
+     *
+     * @param ResponseInterface $response
+     * @param string $name
+     * @param array $args
+     * @return ResponseInterface
+     */
+    public function respond(ResponseInterface $response, string $name, array $args = []): ResponseInterface
+    {
+        $response->getBody()->write(
+            $this->render($name, $args)
+        );
+
+        return $response;
     }
 }

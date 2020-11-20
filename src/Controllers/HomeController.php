@@ -33,10 +33,12 @@ class HomeController
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $response->getBody()->write($this->container->get('View')->render('home.twig', [
-            'name' => 'Jim'
-        ]));
-
-        return $response;
+        return $this->container->get('View')->respond(
+            $response,
+            'home.twig',
+            [
+                'name' => 'Jim'
+            ]
+        );
     }
 }

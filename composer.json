@@ -38,6 +38,7 @@
         "psalm": "./vendor/bin/psalm --show-info=true",
         "phpunit": "./vendor/bin/phpunit --colors=always tests",
         "phpunit:testdox": "@phpunit --testdox",
-        "phpunit:coverage": "@phpunit --coverage-html coverage"
+        "phpunit:coverage": "@phpunit --coverage-html coverage",
+        "test" : "composer phpcs && composer psalm && composer phpunit"
     }
 }

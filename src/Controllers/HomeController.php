@@ -24,7 +24,7 @@ class HomeController
     }
 
     /**
-     * Initial controller
+     * When loading the route
      *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
@@ -55,7 +55,7 @@ class HomeController
     }
 
     /**
-     * Initial controller
+     * When updating the form
      *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response

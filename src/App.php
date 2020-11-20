@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Dependencies\Test;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
 use App\Handlers\ShutdownHandler;
+use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
@@ -16,6 +18,11 @@ class App
      * @var boolean
      */
     protected $display_errors;
+
+    /**
+     * @var Container
+     */
+    protected $container;
 
     /**
      * @var \Slim\App
@@ -34,9 +41,23 @@ class App
     {
         $this->display_errors = ($_ENV['APP_ENV'] == 'development' ? true : false);
 
-        $this->slim = AppFactory::create();
+        $this->container = new Container();
+
+        $this->setupContainer();
+
+        $this->slim = AppFactory::createFromContainer($this->container);
 
         $this->setupApp();
+    }
+
+    /**
+     * Set up the container (called in the constructor)
+     */
+    protected function setupContainer(): void
+    {
+        $this->container->set('Test', function() {
+            return new Test;
+        });
     }
 
     /**
@@ -52,10 +73,7 @@ class App
      */
     protected function addRoutes(): void
     {
-        $this->slim->get('/', function (ServerRequestInterface $request, ResponseInterface $response, array $args) {
-            $response->getBody()->write('Hello world!');
-            return $response;
-        });
+        require_once '../inc/routes/web.php';
     }
 
     /**

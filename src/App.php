@@ -4,9 +4,11 @@ namespace App;
 
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
+use App\Handlers\ShutdownHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
+use Slim\Factory\ServerRequestCreatorFactory;
 
 class App
 {
@@ -14,6 +16,11 @@ class App
      * @var \Slim\App
      */
     protected $slim;
+
+    /**
+     * @var HttpErrorHandler
+     */
+    protected $error_handler;
 
     /**
      * Set up
@@ -44,16 +51,32 @@ class App
         });
     }
 
-    protected function addErrorMiddleware()
+    /**
+     * Add error handler
+     */
+    protected function addErrorHandler(): void
     {
+        $this->error_handler = new HttpErrorHandler(
+            $this->slim->getCallableResolver(),
+            $this->slim->getResponseFactory()
+        );
+
         $this->slim
             ->addErrorMiddleware(true, false, false)
-            ->setDefaultErrorHandler(
-                new HttpErrorHandler(
-                    $this->slim->getCallableResolver(),
-                    $this->slim->getResponseFactory()
-                )
-            );
+            ->setDefaultErrorHandler($this->error_handler);
+    }
+
+    /**
+     * Add shutdown (fatal error) handler
+     */
+    protected function addShutdownHandler(): void
+    {
+        $serverRequestCreator = ServerRequestCreatorFactory::create();
+        $request              = $serverRequestCreator->createServerRequestFromGlobals();
+
+        $shutdownHandler = new ShutdownHandler($request, $this->error_handler, false);
+
+        \register_shutdown_function($shutdownHandler);
     }
 
     /**
@@ -65,7 +88,8 @@ class App
         $this->addRoutes();
 
         $this->slim->addRoutingMiddleware();
-        $this->addErrorMiddleware();
+        $this->addErrorHandler();
+        $this->addShutdownHandler();
     }
 
     /**

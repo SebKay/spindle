@@ -3,6 +3,8 @@
 namespace Tests\Unit\Controllers;
 
 use App\App;
+use Psr\Http\Message\UriInterface;
+use Slim\Factory\ServerRequestCreatorFactory;
 use Tests\Unit\Test;
 
 class HomeControllerTest extends Test
@@ -20,7 +22,7 @@ class HomeControllerTest extends Test
     }
 
     /**
-     * @testdox It returns a 400 response with POST on the update method (without CSRF data)
+     * @testdox It returns a 400 response with CSRF data
      */
     public function test_update_returns_400_without_csrf()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers;
 use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -33,23 +34,12 @@ class HomeController
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $csrf     = $this->container->get('csrf');
-        $nameKey  = $csrf->getTokenNameKey();
-        $valueKey = $csrf->getTokenValueKey();
-
         return $this->container->get('View')->respond(
             $response,
             'home.twig',
             [
                 'name'   => 'Jim',
-                'csrf'   => [
-                    'keys' => [
-                        'name'  => $nameKey,
-                        'value' => $valueKey
-                    ],
-                    'name'  => $request->getAttribute($nameKey),
-                    'value' => $request->getAttribute($valueKey)
-                ],
+                'csrf'   => Helpers::generateCSRFData($this->container->get('csrf'), $request)
             ]
         );
     }
@@ -64,23 +54,16 @@ class HomeController
      */
     public function update(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $csrf     = $this->container->get('csrf');
-        $nameKey  = $csrf->getTokenNameKey();
-        $valueKey = $csrf->getTokenValueKey();
+        echo '<pre>';
+        var_dump($request->getAttributes());
+        echo '</pre>';
 
         return $this->container->get('View')->respond(
             $response,
             'home.twig',
             [
-                'name'   => 'Jim',
-                'csrf'   => [
-                    'keys' => [
-                        'name'  => $nameKey,
-                        'value' => $valueKey
-                    ],
-                    'name'  => $request->getAttribute($nameKey),
-                    'value' => $request->getAttribute($valueKey)
-                ],
+                'name' => 'Jim',
+                'csrf' => Helpers::generateCSRFData($this->container->get('csrf'), $request),
                 'form' => (array) $request->getParsedBody()
             ]
         );

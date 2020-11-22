@@ -54,10 +54,6 @@ class HomeController
      */
     public function update(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        echo '<pre>';
-        var_dump($request->getAttributes());
-        echo '</pre>';
-
         return $this->container->get('View')->respond(
             $response,
             'home.twig',

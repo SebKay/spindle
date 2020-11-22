@@ -3,8 +3,6 @@
 namespace Tests\Unit\Controllers;
 
 use App\App;
-use Psr\Http\Message\UriInterface;
-use Slim\Factory\ServerRequestCreatorFactory;
 use Tests\Unit\Test;
 
 class HomeControllerTest extends Test

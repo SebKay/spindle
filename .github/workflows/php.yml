@@ -3,6 +3,17 @@ name: PHP
 on: [pull_request]
 
 jobs:
+  create-envfile:
+    name: Setup .env file
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Create file
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_APP_ENV: "development"
+        file_name: .env
+  
   test-code:
     name: Test
     runs-on: ubuntu-latest

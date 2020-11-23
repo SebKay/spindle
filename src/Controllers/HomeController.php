@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers;
 use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,7 +25,7 @@ class HomeController
     }
 
     /**
-     * Initial controller
+     * When loading the route
      *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
@@ -33,11 +34,33 @@ class HomeController
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        return $this->container->get('View')->respond(
+        return $this->container->get('view')->respond(
             $response,
             'home.twig',
             [
-                'name' => 'Jim'
+                'name'   => 'Jim',
+                'csrf'   => Helpers::generateCSRFData($this->container->get('csrf'), $request)
+            ]
+        );
+    }
+
+    /**
+     * When updating the form
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param array $args
+     * @return ResponseInterface
+     */
+    public function update(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        return $this->container->get('view')->respond(
+            $response,
+            'home.twig',
+            [
+                'name' => 'Jim',
+                'csrf' => Helpers::generateCSRFData($this->container->get('csrf'), $request),
+                'form' => (array) $request->getParsedBody()
             ]
         );
     }

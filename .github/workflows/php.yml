@@ -1,0 +1,23 @@
+name: PHP
+
+on: [pull_request]
+
+jobs:
+  test-code:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Validate code against PSR12
+      run: composer phpcs
+    
+    - name: Validate code against Psalm level 4
+      run: composer psalm
+
+    - name: Run unit tests
+      run: composer phpunit

@@ -13,7 +13,6 @@ use Slim\Exception\HttpNotImplementedException;
 use Slim\Exception\HttpUnauthorizedException;
 use Slim\Handlers\ErrorHandler;
 use Exception;
-use Throwable;
 use Slim\Interfaces\CallableResolverInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
@@ -88,7 +87,7 @@ class HttpErrorHandler extends ErrorHandler
 
         if (
             !($exception instanceof HttpException)
-            && ($exception instanceof Exception || $exception instanceof Throwable)
+            && ($exception instanceof Exception)
             && $this->displayErrorDetails
         ) {
             $description = $exception->getMessage();

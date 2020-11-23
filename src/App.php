@@ -61,7 +61,10 @@ class App
         $this->container->set('csrf', function () {
             $guard = new Guard($this->slim->getResponseFactory());
 
-            $guard->setFailureHandler(function (ServerRequestInterface $request, RequestHandlerInterface $handler) {
+            $guard->setFailureHandler(function (
+                ServerRequestInterface $request,
+                RequestHandlerInterface $handler
+            ): ResponseInterface {
                 $status_code = 400;
                 $response = $this->slim
                     ->getResponseFactory()

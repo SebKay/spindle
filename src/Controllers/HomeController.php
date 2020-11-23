@@ -34,7 +34,7 @@ class HomeController
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        return $this->container->get('View')->respond(
+        return $this->container->get('view')->respond(
             $response,
             'home.twig',
             [
@@ -54,7 +54,7 @@ class HomeController
      */
     public function update(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        return $this->container->get('View')->respond(
+        return $this->container->get('view')->respond(
             $response,
             'home.twig',
             [

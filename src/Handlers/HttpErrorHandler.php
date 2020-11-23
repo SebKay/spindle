@@ -105,7 +105,7 @@ class HttpErrorHandler extends ErrorHandler
         $response = $this->responseFactory->createResponse($statusCode);
         // $response->getBody()->write(json_encode($error, JSON_PRETTY_PRINT));
 
-        return $this->container->get('View')->respond(
+        return $this->container->get('view')->respond(
             $response,
             'http-error.twig',
             [

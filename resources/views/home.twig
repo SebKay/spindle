@@ -7,8 +7,11 @@ Welcome, {{ name }}!
         </label>
         <br>
         <input id="name" type="text" name="name">
-        <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
-        <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
+
+        {% if csrf %}
+            <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
+            <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
+        {% endif %}
     </p>
 
     <p>

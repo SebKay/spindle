@@ -9,6 +9,7 @@ use App\Handlers\ShutdownHandler;
 use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
@@ -56,17 +57,36 @@ class App
      */
     protected function setupContainer(): void
     {
+        //---- CSRF protection
+        $this->container->set('csrf', function () {
+            $guard = new Guard($this->slim->getResponseFactory());
+
+            $guard->setFailureHandler(function (ServerRequestInterface $request, RequestHandlerInterface $handler) {
+                $status_code = 400;
+                $response = $this->slim
+                    ->getResponseFactory()
+                    ->createResponse()
+                    ->withStatus($status_code);
+
+                return $this->container->get('view')->respond(
+                    $response,
+                    'http-error.twig',
+                    [
+                        'code'        => $status_code,
+                        'description' => 'There Was An Error',
+                    ]
+                );
+            });
+
+            return $guard;
+        });
+
         //---- View
-        $this->container->set('View', function () {
+        $this->container->set('view', function () {
             return new View(
                 __DIR__ . '/../resources/views',
                 ($this->dev_mode ? '' : '.cache/views')
             );
-        });
-
-        //---- CSRF protection
-        $this->container->set('csrf', function () {
-            return new Guard($this->slim->getResponseFactory());
         });
     }
 

@@ -71,14 +71,12 @@ class App
                     ->createResponse()
                     ->withStatus($status_code);
 
-                return $this->container->get('view')->respond(
-                    $response,
-                    'http-error.twig',
-                    [
+                return $this->container
+                    ->get('view')
+                    ->respond($response, 'http-error.twig', [
                         'code'        => $status_code,
                         'description' => 'There Was An Error',
-                    ]
-                );
+                    ]);
             });
 
             return $guard;
@@ -99,7 +97,7 @@ class App
     protected function addMiddleware(): void
     {
         $this->slim->add('csrf');
-        $this->slim->add(new ExampleMiddleware());
+        $this->slim->add(ExampleMiddleware::class);
     }
 
     /**

@@ -3,27 +3,11 @@
 namespace App\Controllers;
 
 use App\Helpers;
-use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class HomeController
+class HomeController extends Controller
 {
-    /**
-     * @var Container
-     */
-    protected $container;
-
-    /**
-     * Set up
-     *
-     * @param Container $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
     /**
      * When loading the route
      *
@@ -34,12 +18,12 @@ class HomeController
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        return $this->container->get('view')->respond(
+        return $this->view->respond(
             $response,
             'home.twig',
             [
                 'name'   => 'Jim',
-                'csrf'   => Helpers::generateCSRFData($this->container->get('csrf'), $request)
+                'csrf'   => Helpers::generateCSRFData($this->csrf, $request)
             ]
         );
     }
@@ -54,12 +38,12 @@ class HomeController
      */
     public function update(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        return $this->container->get('view')->respond(
+        return $this->view->respond(
             $response,
             'home.twig',
             [
                 'name' => 'Jim',
-                'csrf' => Helpers::generateCSRFData($this->container->get('csrf'), $request),
+                'csrf' => Helpers::generateCSRFData($this->csrf, $request),
                 'form' => (array) $request->getParsedBody()
             ]
         );

@@ -10,6 +10,7 @@ use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Slim\App as SlimApp;
 use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
@@ -41,13 +42,9 @@ class App
      */
     public function __construct()
     {
-        $this->dev_mode = ($_ENV['APP_ENV'] == 'development' ? true : false);
-
+        $this->dev_mode  = ($_ENV['APP_ENV'] == 'development' ? true : false);
         $this->container = $this->setupContainer();
-
-        $this->slim = AppFactory::createFromContainer($this->container());
-
-        $this->setupApp();
+        $this->slim      = $this->setupSlim();
     }
 
     /**
@@ -152,14 +149,18 @@ class App
     /**
      * Setup the app (called in the constructor)
      */
-    protected function setupApp(): void
+    protected function setupSlim(): SlimApp
     {
+        $this->slim = AppFactory::createFromContainer($this->container());
+
         $this->addMiddleware();
         $this->addRoutes();
 
         $this->slim->addRoutingMiddleware();
         $this->addErrorHandler();
         $this->addShutdownHandler();
+
+        return $this->slim;
     }
 
     /**

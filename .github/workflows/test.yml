@@ -22,7 +22,7 @@ jobs:
     - name: Validate code against Psalm level 4
       run: composer psalm
   test-php:
-    name: Test
+    name: Unit Test
     runs-on: ubuntu-latest
 
     steps:

@@ -4,10 +4,15 @@ namespace Tests\Unit\Middleware;
 
 use App\App;
 use App\Dependencies\View;
-use Tests\Unit\Test;
+use Tests\Unit\UnitTest;
 
-class ViewTest extends Test
+class ViewTest extends UnitTest
 {
+    /**
+     * @var App
+     */
+    protected $app;
+
     public function setUp(): void
     {
         parent::setUp();

@@ -3,18 +3,15 @@
 namespace Tests\Unit\Controllers;
 
 use App\App;
-use Tests\Unit\Test;
+use Tests\Unit\UnitTest;
 
-class HomeControllerTest extends Test
+class HomeControllerTest extends UnitTest
 {
     /**
      * @var App
      */
     protected $app;
 
-    /**
-     * Set up for each test
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -30,16 +27,6 @@ class HomeControllerTest extends Test
         $request = $this->createRequest('GET', '/');
 
         $this->assertEquals(200, $this->app->handle($request)->getStatusCode());
-    }
-
-    /**
-     * @testdox It returns a 400 response without CSRF data
-     */
-    public function test_update_returns_400_without_csrf()
-    {
-        $request = $this->createRequest('POST', '/');
-
-        $this->assertEquals(400, $this->app->handle($request)->getStatusCode());
     }
 
     /**
@@ -60,5 +47,15 @@ class HomeControllerTest extends Test
             ]);
 
         $this->assertEquals(200, $this->app->handle($post_request)->getStatusCode());
+    }
+
+    /**
+     * @testdox It returns a 400 response without CSRF data
+     */
+    public function test_update_returns_400_without_csrf()
+    {
+        $request = $this->createRequest('POST', '/');
+
+        $this->assertEquals(400, $this->app->handle($request)->getStatusCode());
     }
 }

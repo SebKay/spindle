@@ -43,11 +43,9 @@ class App
     {
         $this->dev_mode = (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] == 'development' ? true : false);
 
-        $this->container = new Container();
+        $this->container = $this->setupContainer();
 
-        $this->setupContainer();
-
-        $this->slim = AppFactory::createFromContainer($this->container);
+        $this->slim = AppFactory::createFromContainer($this->container());
 
         $this->setupApp();
     }
@@ -55,8 +53,10 @@ class App
     /**
      * Set up the container (called in the constructor)
      */
-    protected function setupContainer(): void
+    protected function setupContainer(): Container
     {
+        $this->container = new Container();
+
         //---- CSRF protection
         $this->container->set('csrf', function () {
             $guard = new Guard($this->slim->getResponseFactory());
@@ -89,6 +89,18 @@ class App
                 ($this->dev_mode ? '' : '.cache/views')
             );
         });
+
+        return $this->container;
+    }
+
+    /**
+     * Get the container
+     *
+     * @return Container
+     */
+    public function container()
+    {
+        return $this->container;
     }
 
     /**
@@ -114,7 +126,7 @@ class App
     protected function addErrorHandler(): void
     {
         $this->error_handler = new HttpErrorHandler(
-            $this->container,
+            $this->container(),
             $this->slim->getCallableResolver(),
             $this->slim->getResponseFactory()
         );

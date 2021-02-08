@@ -4,10 +4,22 @@ namespace Tests\Unit\Middleware;
 
 use App\App;
 use App\Dependencies\View;
-use Tests\Unit\Test;
+use Tests\Unit\UnitTest;
 
-class ViewTest extends Test
+class ViewTest extends UnitTest
 {
+    /**
+     * @var App
+     */
+    protected $app;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app = new App;
+    }
+
     /**
      * @testdox It returns a string when rendering
      */
@@ -27,8 +39,7 @@ class ViewTest extends Test
     public function test_it_responds_with_a_response()
     {
         $request = $this->createRequest('GET', '/');
-        $app     = new App;
 
-        $this->assertInstanceOf('\Psr\Http\Message\ResponseInterface', $app->handle($request));
+        $this->assertInstanceOf('\Psr\Http\Message\ResponseInterface', $this->app->handle($request));
     }
 }

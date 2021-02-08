@@ -4,11 +4,11 @@ namespace Tests\Unit\Middleware;
 
 use App\Middleware\ExampleMiddleware;
 use Slim\Factory\AppFactory;
-use Tests\Unit\Test;
+use Tests\Unit\UnitTest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ExampleMiddlewareTest extends Test
+class ExampleMiddlewareTest extends UnitTest
 {
     /**
      * @testdox It returns a valid response when called

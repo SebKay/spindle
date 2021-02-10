@@ -30,6 +30,9 @@ jobs:
       - uses: nanasess/setup-php@master
         with:
           php-version: "7.4"
+      
+      - name: Set env variables
+        run: echo "APP_ENV=development" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest

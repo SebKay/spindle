@@ -30,9 +30,11 @@ jobs:
       - uses: nanasess/setup-php@master
         with:
           php-version: "7.4"
-      
-      - name: Set env variables
-        run: echo "$_ENV['APP_ENV']=development"
+
+      - name: Create ENV file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_APP_ENV: ${{ secrets.APP_ENV }}
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest

@@ -34,7 +34,7 @@ jobs:
       - name: Create ENV file
         uses: SpicyPizza/create-envfile@v1
         with:
-          envkey_APP_ENV: ${{ secrets.APP_ENV }}
+          envkey_APP_ENV: "development"
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest

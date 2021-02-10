@@ -1,24 +1,11 @@
 <?php
 
-namespace Tests\Unit\Controllers;
+namespace Tests\Integration\Controllers;
 
-use App\App;
-use Tests\Unit\UnitTest;
+use Tests\Integration\IntegrationTest;
 
-class HomeControllerTest extends UnitTest
+class HomeControllerTest extends IntegrationTest
 {
-    /**
-     * @var App
-     */
-    protected $app;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app = new App;
-    }
-
     /**
      * @testdox It returns a 200 response with GET on the index method
      */

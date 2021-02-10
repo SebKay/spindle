@@ -1,0 +1,46 @@
+name: Test PHP
+
+on: [pull_request]
+
+jobs:
+  validate-php:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: nanasess/setup-php@master
+        with:
+          php-version: "7.4"
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Validate code against PSR12
+        run: composer lint:php
+
+      - name: Validate code against Psalm level 4
+        run: composer analyse:php
+  test-php:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: nanasess/setup-php@master
+        with:
+          php-version: "7.4"
+
+      - name: Create ENV file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_APP_ENV: "development"
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run unit tests
+        run: composer test:php:unit
+
+      - name: Run integration tests
+        run: composer test:php:integration

@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit\Middleware;
+namespace Tests\Integration\Middleware;
 
 use App\Middleware\ExampleMiddleware;
 use Slim\Factory\AppFactory;
-use Tests\Unit\UnitTest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Tests\Integration\IntegrationTest;
 
-class ExampleMiddlewareTest extends UnitTest
+class ExampleMiddlewareTest extends IntegrationTest
 {
     /**
      * @testdox It returns a valid response when called

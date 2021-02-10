@@ -1,23 +1,9 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Integration;
 
-use App\App;
-
-class AppTest extends UnitTest
+class AppTest extends IntegrationTest
 {
-    /**
-     * @var App
-     */
-    protected $app;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app = new App;
-    }
-
     /**
      * @testdox It returns a 200 response when handling a valid request
      */

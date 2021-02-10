@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Integration;
 
 use App\App;
 
-class AppTest extends UnitTest
+class AppTest extends IntegrationTest
 {
     /**
      * @var App

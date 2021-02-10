@@ -35,12 +35,11 @@
     },
     "scripts": {
         "refresh": "git clean -xffd && composer install --ansi",
-        "phpcs": "./vendor/bin/phpcs --standard=PSR12 src",
-        "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 src",
-        "psalm": "./vendor/bin/psalm --show-info=true",
-        "phpunit": "./vendor/bin/phpunit --colors=always tests --process-isolation",
-        "phpunit:testdox": "@phpunit --testdox",
-        "phpunit:coverage": "@phpunit --coverage-html coverage",
-        "test" : "composer phpcs && composer psalm && composer phpunit"
+        "lint:php": "./vendor/bin/phpcs --standard=PSR12 src",
+        "fix:php": "./vendor/bin/phpcbf --standard=PSR12 src",
+        "analyse:php": "./vendor/bin/psalm --show-info=true",
+        "test:unit:php": "./vendor/bin/phpunit --colors=always tests --process-isolation",
+        "test:unit:php-testdox": "@test:unit:php --testdox",
+        "test:unit:php-coverage": "@test:unit:php --coverage-html coverage"
     }
 }

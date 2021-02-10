@@ -32,7 +32,7 @@ jobs:
           php-version: "7.4"
       
       - name: Set env variables
-        run: echo "APP_ENV=development" >> $GITHUB_ENV
+        run: echo "$_ENV['APP_ENV']=development"
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest

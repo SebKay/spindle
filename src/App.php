@@ -38,6 +38,11 @@ class App
     protected $error_handler;
 
     /**
+     * @var Database
+     */
+    protected $database;
+
+    /**
      * Set up
      */
     public function __construct()
@@ -45,6 +50,7 @@ class App
         $this->dev_mode  = ($_ENV['APP_ENV'] == 'development' ? true : false);
         $this->container = $this->setupContainer();
         $this->slim      = $this->setupSlim();
+        $this->database  = new Database();
     }
 
     /**

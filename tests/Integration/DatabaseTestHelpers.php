@@ -8,23 +8,27 @@ use App\Models\User;
 class DatabaseTestHelpers
 {
     public $db;
+    public $faker;
 
     public function __construct(Database $db)
     {
-        $this->db = $db;
+        $this->db    = $db;
+        $this->faker = \Faker\Factory::create();
     }
 
     /**
      * Create some fake users
      */
-    public function createDummyUsers()
+    public function createDummyUsers(int $amount = 1)
     {
-        User::create([
-            'email'      => 'test@123.com',
-            'password'   => '12345',
-            'first_name' => 'Jim',
-            'last_name'  => 'Gordon',
-        ]);
+        for ($i = 0; $i < $amount; $i++) {
+            User::create([
+                'email'      => $this->faker->email,
+                'password'   => $this->faker->password,
+                'first_name' => $this->faker->firstName,
+                'last_name'  => $this->faker->lastName,
+            ]);
+        }
     }
 
     /**

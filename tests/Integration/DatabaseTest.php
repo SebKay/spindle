@@ -36,13 +36,13 @@ class DatabaseTest extends IntegrationTest
     }
 
     /**
-     * @testdox It creates dummy data
+     * @testdox It creates dummy users
      */
-    public function test_creates_dummy_data()
+    public function test_creates_dummy_users()
     {
         $this->database->migrateTables();
-        $this->database_helpers->createDummyUsers();
+        $this->database_helpers->createDummyUsers(3);
 
-        $this->assertNotNull(User::where('email', '=', 'test@123.com'));
+        $this->assertEquals(3, User::count());
     }
 }

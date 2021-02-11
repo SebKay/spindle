@@ -38,8 +38,6 @@ jobs:
       #     envkey_DB_DRIVER: "sqlite"
       #     envkey_DB_DATABASE: ""
 
-      - name: Set ENV
-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 

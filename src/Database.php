@@ -6,6 +6,9 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class Database
 {
+    /**
+     * @var DB
+     */
     public $db;
 
     public function __construct()
@@ -18,7 +21,7 @@ class Database
     /**
      * Create connection and make global
      */
-    protected function setup()
+    protected function setup(): void
     {
         $this->db->addConnection([
             'driver'   => ($_ENV['DB_DRIVER'] ?? null),
@@ -37,7 +40,7 @@ class Database
     /**
      * Create the "users" table
      */
-    protected function createUsersTable()
+    protected function createUsersTable(): void
     {
         if (!$this->db->schema()->hasTable('users')) {
             $this->db->schema()->create('users', function ($table) {
@@ -55,7 +58,7 @@ class Database
      * Create all tables
      * * Will skip tables if they already exist
      */
-    public function migrateTables()
+    public function migrateTables(): void
     {
         $this->createUsersTable();
     }

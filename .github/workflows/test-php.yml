@@ -39,16 +39,20 @@ jobs:
       #     envkey_DB_DATABASE: ""
 
       - name: Set ENV
-        env:
-          APP_ENV: "test"
-          DB_DRIVER: "sqlite"
-          DB_DATABASE: ":memory:"
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run unit tests
+        env:
+          APP_ENV: "test"
+          DB_DRIVER: "sqlite"
+          DB_DATABASE: ":memory:"
         run: composer test:php:unit
 
       - name: Run integration tests
+        env:
+          APP_ENV: "test"
+          DB_DRIVER: "sqlite"
+          DB_DATABASE: ":memory:"
         run: composer test:php:integration

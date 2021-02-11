@@ -4,7 +4,6 @@ namespace Tests\Integration;
 
 use App\App;
 use PHPUnit\Framework\TestCase;
-use Tests\ServerTestTrait;
 
 abstract class IntegrationTest extends TestCase
 {

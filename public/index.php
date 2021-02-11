@@ -2,4 +2,4 @@
 
 require __DIR__ . '/../config/bootstrap.php';
 
-(new \App\App)->run();
+(new \App\App())->run();

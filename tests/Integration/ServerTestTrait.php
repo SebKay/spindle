@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Integration;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ServerRequestFactory;

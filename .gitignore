@@ -1,7 +1,9 @@
 # Directories
-/vendor/
-/coverage/
+node_modules/
+vendor/
+coverage/
 .cache/
+public/assets/
 
 # Files
 .phpunit.result.cache

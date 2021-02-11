@@ -1,28 +1,52 @@
-Welcome, {{ name }}!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Slim Starter</title>
 
-<form method="post" action="">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="app">
+        <p>
+            Test: {= test =}
+        </p>
+    </div>
+    
     <p>
-        <label for="name">
-            Name
-        </label>
-        <br>
-        <input id="name" type="text" name="name">
-
-        {% if csrf %}
-            <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
-            <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
-        {% endif %}
+        Welcome, {{ name }}!
     </p>
 
-    <p>
-        <button>
-            Submit
-        </button>
-    </p>
-</form>
+    <br>
 
-{% if form.name %}
-    <p>
-        Your name is: <strong>{{ form.name }}</strong>
-    </p>
-{% endif %}
+    <form method="post" action="">
+        <p>
+            <label for="name">
+                Name
+            </label>
+            <br>
+            <input id="name" type="text" name="name">
+
+            {% if csrf %}
+                <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
+                <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
+            {% endif %}
+        </p>
+
+        <p>
+            <button>
+                Submit
+            </button>
+        </p>
+    </form>
+
+    {% if form.name %}
+        <p>
+            Your name is: <strong>{{ form.name }}</strong>
+        </p>
+    {% endif %}
+
+    <script src="/assets/js/app.js"></script>
+</body>
+</html>

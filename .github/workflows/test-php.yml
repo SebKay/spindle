@@ -40,8 +40,6 @@ jobs:
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_APP_ENV: "test"
-          envkey_DB_DRIVER: "sqlite"
-          envkey_DB_DATABASE: "database/database.sqlite"
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest

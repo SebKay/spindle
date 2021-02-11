@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class Database
 {
-    protected $db;
+    public $db;
 
     public function __construct()
     {
@@ -40,18 +40,16 @@ class Database
      */
     protected function createUsersTable()
     {
-        if (DB::schema()->hasTable('users')) {
-            return;
+        if (!$this->db->schema()->hasTable('users')) {
+            $this->db->schema()->create('users', function ($table) {
+                $table->increments('id');
+                $table->string('email');
+                $table->string('password');
+                $table->string('first_name');
+                $table->string('last_name');
+                $table->timestamps();
+            });
         }
-
-        DB::schema()->create('users', function ($table) {
-            $table->increments('id');
-            $table->string('email');
-            $table->string('password');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->timestamps();
-        });
     }
 
     /**

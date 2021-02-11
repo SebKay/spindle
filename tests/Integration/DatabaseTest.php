@@ -2,12 +2,8 @@
 
 namespace Tests\Integration;
 
-use App\App;
 use App\Database;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use PHPUnit\Framework\TestCase;
-use Tests\ServerTestTrait;
 
 class DatabaseTest extends IntegrationTest
 {
@@ -16,11 +12,17 @@ class DatabaseTest extends IntegrationTest
      */
     protected $database;
 
+    /**
+     * @var DatabaseHe
+     */
+    protected $DatabaseTestHelpers;
+
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->database = new Database();
+        $this->database         = new Database();
+        $this->database_helpers = new DatabaseTestHelpers($this->database);
     }
 
     /**
@@ -39,7 +41,7 @@ class DatabaseTest extends IntegrationTest
     public function test_creates_dummy_data()
     {
         $this->database->migrateTables();
-        $this->database->createDummyData();
+        $this->database_helpers->createDummyUsers();
 
         $this->assertNotNull(User::where('email', '=', 'test@123.com'));
     }

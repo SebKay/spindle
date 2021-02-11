@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Models\User;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class Database
@@ -53,32 +52,11 @@ class Database
     }
 
     /**
-     * Create some fake users
-     */
-    protected function createDummyUsers()
-    {
-        User::create([
-            'email'      => 'test@123.com',
-            'password'   => '12345',
-            'first_name' => 'Jim',
-            'last_name'  => 'Gordon',
-        ]);
-    }
-
-    /**
      * Create all tables
      * * Will skip tables if they already exist
      */
     public function migrateTables()
     {
         $this->createUsersTable();
-    }
-
-    /**
-     * Create fake data for tables
-     */
-    public function createDummyData()
-    {
-        $this->createDummyUsers();
     }
 }

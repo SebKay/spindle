@@ -31,26 +31,16 @@ jobs:
         with:
           php-version: "7.4"
 
-      # - name: Create ENV file
-      #   uses: SpicyPizza/create-envfile@v1
-      #   with:
-      #     envkey_APP_ENV: "test"
-      #     envkey_DB_DRIVER: "sqlite"
-      #     envkey_DB_DATABASE: ""
+      - name: Create ENV file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_APP_ENV: "test"
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run unit tests
-        env:
-          APP_ENV: "test"
-          DB_DRIVER: "sqlite"
-          DB_DATABASE: ":memory:"
         run: composer test:php:unit
 
       - name: Run integration tests
-        env:
-          APP_ENV: "test"
-          DB_DRIVER: "sqlite"
-          DB_DATABASE: ":memory:"
         run: composer test:php:integration

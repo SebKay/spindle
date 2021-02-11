@@ -31,6 +31,11 @@ jobs:
         with:
           php-version: "7.4"
 
+      - name: Create ENV file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_APP_ENV: "development"
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 

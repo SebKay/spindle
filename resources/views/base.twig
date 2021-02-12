@@ -10,14 +10,20 @@
     <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body>
-    <div class="site-wrap">
+    <div id="app" class="site-wrap">
         <header class="site-header">
             {% include "partials/logo.twig" %}
         </header>
 
-        <main id="app">
+        <main class="site-main">
             {{ block('body') }}
         </main>
+
+        <footer class="site-footer">
+            <p>
+                Footer
+            </p>
+        </footer>
     </div>
 
     <script src="/assets/js/app.js"></script>

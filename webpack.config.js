@@ -2,8 +2,8 @@ let webpack = require('webpack');
 let path = require('path');
 let MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = [
-    {
+module.exports = (env, options) => {
+    return {
         entry: [
             './resources/assets/js/app.js',
             './resources/assets/scss/app.scss',
@@ -39,5 +39,5 @@ module.exports = [
                 filename: '../css/app.css',
             }),
         ],
-    },
-];
+    }
+};

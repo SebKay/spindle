@@ -76,7 +76,7 @@ class App
 
                 return $this->container
                     ->get('view')
-                    ->respond($response, 'http-error.twig', [
+                    ->respond($response, 'layouts/http-error.twig', [
                         'code'        => $status_code,
                         'description' => 'There Was An Error',
                     ]);

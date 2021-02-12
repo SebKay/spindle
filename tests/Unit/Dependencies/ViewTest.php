@@ -17,6 +17,6 @@ class ViewTest extends UnitTest
             ''
         );
 
-        $this->assertIsString($view->render('home.twig'));
+        $this->assertIsString($view->render('layouts/home.twig'));
     }
 }

@@ -1,5 +1,6 @@
-$test: #e2e2e2;
+@import 'common/reset';
+@import 'common/typography';
+@import 'common/general';
 
-body {
-    background: $test;
-}
+@import 'components/site/wrap';
+@import 'components/site/header';

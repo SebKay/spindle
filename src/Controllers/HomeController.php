@@ -20,7 +20,7 @@ class HomeController extends Controller
     {
         return $this->view->respond(
             $response,
-            'home.twig',
+            'layouts/home.twig',
             [
                 'name'   => 'Jim',
                 'csrf'   => Helpers::generateCSRFData($this->csrf, $request)
@@ -40,7 +40,7 @@ class HomeController extends Controller
     {
         return $this->view->respond(
             $response,
-            'home.twig',
+            'layouts/home.twig',
             [
                 'name' => 'Jim',
                 'csrf' => Helpers::generateCSRFData($this->csrf, $request),

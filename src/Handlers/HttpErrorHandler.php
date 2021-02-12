@@ -106,7 +106,7 @@ class HttpErrorHandler extends ErrorHandler
 
         return $this->container->get('view')->respond(
             $response,
-            'http-error.twig',
+            'layouts/http-error.twig',
             [
                 'code'        => $statusCode,
                 'description' => $description,

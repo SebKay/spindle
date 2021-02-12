@@ -13,6 +13,6 @@
     "scripts": {
         "dev": "webpack --mode=development",
         "prod": "webpack --mode=production",
-        "watch": "webpack --watch"
+        "watch": "webpack --mode=development --watch"
     }
 }

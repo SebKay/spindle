@@ -26,21 +26,21 @@
         "php-di/slim-bridge": "^3.0",
         "twig/twig": "^3.1",
         "slim/csrf": "^1.0",
-        "illuminate/database": "^8.27"
+        "illuminate/database": "^8.27",
+        "fakerphp/faker": "^1.13"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
         "vimeo/psalm": "^4.1",
         "phpunit/phpunit": "^9.4",
-        "spatie/ray": "^1.19",
-        "fakerphp/faker": "^1.13"
+        "spatie/ray": "^1.19"
     },
     "scripts": {
         "refresh": "git clean -xffd && composer install --ansi",
         "lint:php": "./vendor/bin/phpcs --standard=PSR12 src",
         "fix:php": "./vendor/bin/phpcbf --standard=PSR12 src",
         "analyse:php": "./vendor/bin/psalm --show-info=true",
-        "test:php": "./vendor/bin/phpunit --colors=always --process-isolation",
+        "test:php": "./vendor/bin/phpunit",
         "test:php-testdox": "@test:php --testdox",
         "test:php-coverage": "@test:php --coverage-html coverage",
         "test:php:unit": "@test:php --testsuite Unit",

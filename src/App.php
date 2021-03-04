@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Database\Database;
+use App\Database\DatabaseHelpers;
 use App\Dependencies\View;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;

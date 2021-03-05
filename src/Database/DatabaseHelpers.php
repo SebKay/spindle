@@ -1,11 +1,12 @@
 <?php
 
-namespace Tests\Integration;
+namespace App\Database;
 
-use App\Database;
+use App\Database\Database;
+use App\Database\Migrations\CreateUsersTable;
 use App\Models\User;
 
-class DatabaseTestHelpers
+class DatabaseHelpers
 {
     public $db;
     public $faker;
@@ -16,10 +17,17 @@ class DatabaseTestHelpers
         $this->faker = \Faker\Factory::create();
     }
 
-    /**
-     * Create some fake users
-     */
-    public function createDummyUsers(int $amount = 1)
+    public function migrateUsersTable()
+    {
+        (new CreateUsersTable($this->db))->up();
+    }
+
+    public function migrateTables()
+    {
+        $this->migrateUsersTable();
+    }
+
+    public function createDummyUsers(int $amount = 3)
     {
         for ($i = 0; $i < $amount; $i++) {
             User::create([
@@ -31,9 +39,6 @@ class DatabaseTestHelpers
         }
     }
 
-    /**
-     * Create fake data for tables
-     */
     public function createDummyData()
     {
         $this->createDummyUsers();

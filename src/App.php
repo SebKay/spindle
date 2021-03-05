@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Database\Database;
+use App\Database\DatabaseHelpers;
 use App\Dependencies\View;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
@@ -10,7 +12,6 @@ use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\App as SlimApp;
 use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
@@ -47,19 +48,32 @@ class App
      */
     public function __construct()
     {
-        $this->dev_mode  = ($_ENV['APP_ENV'] == 'development' ? true : false);
-        $this->container = $this->setupContainer();
-        $this->slim      = $this->setupSlim();
-        $this->database  = new Database();
+        $this->dev_mode  = $this->isDevModeEnabled();
+
+        $this->container = new Container();
+        $this->slim      = AppFactory::createFromContainer($this->container());
+
+        $this->setupContainer();
+        $this->setupSlim();
+
+        $this->database = new Database();
     }
 
     /**
-     * Set up the container (called in the constructor)
+     * Decide if we're in development mode or not
+     *
+     * @return bool
      */
-    protected function setupContainer(): Container
+    public function isDevModeEnabled(): bool
     {
-        $this->container = new Container();
+        return ($_ENV['APP_ENV'] == 'development' || $_ENV['APP_ENV'] == 'test' ? true : false);
+    }
 
+    /**
+     * Set up the container
+     */
+    protected function setupContainer(): void
+    {
         //---- CSRF protection
         $this->container->set('csrf', function () {
             $guard = new Guard($this->slim->getResponseFactory());
@@ -92,8 +106,6 @@ class App
                 ($this->dev_mode ? '' : '.cache/views')
             );
         });
-
-        return $this->container;
     }
 
     /**
@@ -101,7 +113,7 @@ class App
      *
      * @return Container
      */
-    public function container()
+    public function container(): Container
     {
         return $this->container;
     }
@@ -111,6 +123,11 @@ class App
      */
     protected function addMiddleware(): void
     {
+        $this->slim->addRoutingMiddleware();
+
+        $this->slim->addErrorMiddleware($this->dev_mode, false, false)
+            ->setDefaultErrorHandler($this->error_handler);
+
         $this->slim->add('csrf');
         $this->slim->add(ExampleMiddleware::class);
     }
@@ -133,10 +150,6 @@ class App
             $this->slim->getCallableResolver(),
             $this->slim->getResponseFactory()
         );
-
-        $this->slim
-            ->addErrorMiddleware($this->dev_mode, false, false)
-            ->setDefaultErrorHandler($this->error_handler);
     }
 
     /**
@@ -146,8 +159,7 @@ class App
     {
         $serverRequestCreator = ServerRequestCreatorFactory::create();
         $request              = $serverRequestCreator->createServerRequestFromGlobals();
-
-        $shutdownHandler = new ShutdownHandler($request, $this->error_handler, $this->dev_mode);
+        $shutdownHandler      = new ShutdownHandler($request, $this->error_handler, $this->dev_mode);
 
         \register_shutdown_function($shutdownHandler);
     }
@@ -155,18 +167,12 @@ class App
     /**
      * Setup the app (called in the constructor)
      */
-    protected function setupSlim(): SlimApp
+    protected function setupSlim(): void
     {
-        $this->slim = AppFactory::createFromContainer($this->container());
-
-        $this->addMiddleware();
-        $this->addRoutes();
-
-        $this->slim->addRoutingMiddleware();
         $this->addErrorHandler();
         $this->addShutdownHandler();
-
-        return $this->slim;
+        $this->addMiddleware();
+        $this->addRoutes();
     }
 
     /**

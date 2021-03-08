@@ -36,7 +36,8 @@
         "spatie/ray": "^1.19"
     },
     "scripts": {
-        "refresh": "git clean -xffd && composer install --ansi",
+        "build": "git clean -xff -e .env && composer install && yarn install && yarn run dev",
+        "build:prod": "git clean -xffd -e .env && composer install --no-dev && yarn install && yarn run prod",
         "lint:php": "./vendor/bin/phpcs --standard=PSR12 src",
         "fix:php": "./vendor/bin/phpcbf --standard=PSR12 src",
         "analyse:php": "./vendor/bin/psalm --show-info=true",

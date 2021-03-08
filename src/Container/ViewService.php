@@ -6,12 +6,12 @@ use App\Dependencies\View;
 
 class ViewService extends Service
 {
-    public function setName()
+    public function name(): string
     {
         return 'view';
     }
 
-    public function config()
+    public function config(): View
     {
         return new View(
             __DIR__ . '/../../resources/views',

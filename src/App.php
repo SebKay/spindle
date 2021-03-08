@@ -9,6 +9,7 @@ use App\Handlers\HttpErrorHandler;
 use App\Handlers\ShutdownHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\App as SlimApp;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -17,7 +18,7 @@ class App
     /**
      * @var boolean
      */
-    protected $dev_mode;
+    public $dev_mode;
 
     /**
      * @var Container
@@ -25,7 +26,7 @@ class App
     protected $container;
 
     /**
-     * @var \Slim\App
+     * @var SlimApp
      */
     protected $slim;
 
@@ -44,7 +45,7 @@ class App
      */
     public function __construct()
     {
-        $this->dev_mode  = $this->isDevModeEnabled();
+        $this->dev_mode = $this->isDevelopmentMode();
 
         $this->container = new Container($this);
         $this->slim      = AppFactory::createFromContainer($this->container()->get());
@@ -60,7 +61,7 @@ class App
      *
      * @return bool
      */
-    public function isDevModeEnabled(): bool
+    public function isDevelopmentMode(): bool
     {
         return ($_ENV['APP_ENV'] == 'development' || $_ENV['APP_ENV'] == 'test' ? true : false);
     }
@@ -76,11 +77,11 @@ class App
     }
 
     /**
-     * Get the container
+     * Get the slim app
      *
-     * @return \Slim\App
+     * @return SlimApp
      */
-    public function slim(): \Slim\App
+    public function slim(): SlimApp
     {
         return $this->slim;
     }
@@ -90,13 +91,14 @@ class App
      */
     protected function addMiddleware(): void
     {
-        $this->slim->addRoutingMiddleware();
+        $this->slim()->addRoutingMiddleware();
 
-        $this->slim->addErrorMiddleware($this->dev_mode, false, false)
+        $this->slim()
+            ->addErrorMiddleware($this->dev_mode, false, false)
             ->setDefaultErrorHandler($this->error_handler);
 
-        $this->slim->add('csrf');
-        $this->slim->add(ExampleMiddleware::class);
+        $this->slim()->add('csrf');
+        $this->slim()->add(ExampleMiddleware::class);
     }
 
     /**
@@ -114,8 +116,8 @@ class App
     {
         $this->error_handler = new HttpErrorHandler(
             $this->container()->get(),
-            $this->slim->getCallableResolver(),
-            $this->slim->getResponseFactory()
+            $this->slim()->getCallableResolver(),
+            $this->slim()->getResponseFactory()
         );
     }
 
@@ -150,7 +152,7 @@ class App
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->slim->handle($request);
+        return $this->slim()->handle($request);
     }
 
     /**
@@ -160,6 +162,6 @@ class App
      */
     public function run(): void
     {
-        $this->slim->run();
+        $this->slim()->run();
     }
 }

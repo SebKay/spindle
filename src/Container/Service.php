@@ -6,25 +6,29 @@ use App\App;
 
 abstract class Service
 {
-    protected $name;
+    /**
+     * @var \DI\Container
+     */
     protected $container;
+
+    /**
+     * @var App
+     */
     protected $app;
+
+    /**
+     * @var bool
+     */
     protected $dev_mode;
 
-    public function __construct($container, App $app)
+    public function __construct(\DI\Container $container, App $app)
     {
-        $this->name      = $this->setName();
         $this->container = $container;
         $this->app       = $app;
-        $this->dev_mode  = $this->app->isDevModeEnabled();
+        $this->dev_mode  = $this->app->dev_mode;
     }
 
-    public function name()
-    {
-        return $this->name;
-    }
-
-    abstract public function setName();
+    abstract public function name(): string;
 
     abstract public function config();
 }

@@ -12,11 +12,6 @@ class Container
     protected $app;
 
     /**
-     * @var \Slim\App
-     */
-    protected $slim;
-
-    /**
      * @var \DI\Container
      */
     protected $container;

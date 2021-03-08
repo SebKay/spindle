@@ -8,7 +8,14 @@ use App\Models\User;
 
 class DatabaseHelpers
 {
+    /**
+     * @var Database
+     */
     public $db;
+
+    /**
+     * @var \Faker\Generator
+     */
     public $faker;
 
     public function __construct(Database $db)
@@ -17,17 +24,17 @@ class DatabaseHelpers
         $this->faker = \Faker\Factory::create();
     }
 
-    public function migrateUsersTable()
+    public function migrateUsersTable(): void
     {
         (new CreateUsersTable($this->db))->up();
     }
 
-    public function migrateTables()
+    public function migrateTables(): void
     {
         $this->migrateUsersTable();
     }
 
-    public function createDummyUsers(int $amount = 3)
+    public function createDummyUsers(int $amount = 3): void
     {
         for ($i = 0; $i < $amount; $i++) {
             User::create([
@@ -39,7 +46,7 @@ class DatabaseHelpers
         }
     }
 
-    public function createDummyData()
+    public function createDummyData(): void
     {
         $this->createDummyUsers();
     }

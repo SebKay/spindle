@@ -2,17 +2,14 @@
 
 namespace App;
 
+use App\Container\Container;
 use App\Database\Database;
-use App\Database\DatabaseHelpers;
-use App\Dependencies\View;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
 use App\Handlers\ShutdownHandler;
-use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Csrf\Guard;
+use Slim\App as SlimApp;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -21,7 +18,7 @@ class App
     /**
      * @var boolean
      */
-    protected $dev_mode;
+    public $dev_mode;
 
     /**
      * @var Container
@@ -29,7 +26,7 @@ class App
     protected $container;
 
     /**
-     * @var \Slim\App
+     * @var SlimApp
      */
     protected $slim;
 
@@ -48,12 +45,12 @@ class App
      */
     public function __construct()
     {
-        $this->dev_mode  = $this->isDevModeEnabled();
+        $this->dev_mode = $this->isDevelopmentMode();
 
-        $this->container = new Container();
-        $this->slim      = AppFactory::createFromContainer($this->container());
+        $this->container = new Container($this);
+        $this->slim      = AppFactory::createFromContainer($this->container()->get());
 
-        $this->setupContainer();
+        $this->container()->setup();
         $this->setupSlim();
 
         $this->database = new Database();
@@ -64,48 +61,9 @@ class App
      *
      * @return bool
      */
-    public function isDevModeEnabled(): bool
+    public function isDevelopmentMode(): bool
     {
         return ($_ENV['APP_ENV'] == 'development' || $_ENV['APP_ENV'] == 'test' ? true : false);
-    }
-
-    /**
-     * Set up the container
-     */
-    protected function setupContainer(): void
-    {
-        //---- CSRF protection
-        $this->container->set('csrf', function () {
-            $guard = new Guard($this->slim->getResponseFactory());
-
-            $guard->setFailureHandler(function (
-                ServerRequestInterface $request,
-                RequestHandlerInterface $handler
-            ): ResponseInterface {
-                $status_code = 400;
-                $response = $this->slim
-                    ->getResponseFactory()
-                    ->createResponse()
-                    ->withStatus($status_code);
-
-                return $this->container
-                    ->get('view')
-                    ->respond($response, 'layouts/http-error.twig', [
-                        'code'        => $status_code,
-                        'description' => 'There Was An Error',
-                    ]);
-            });
-
-            return $guard;
-        });
-
-        //---- View
-        $this->container->set('view', function () {
-            return new View(
-                __DIR__ . '/../resources/views',
-                ($this->dev_mode ? '' : '.cache/views')
-            );
-        });
     }
 
     /**
@@ -119,17 +77,28 @@ class App
     }
 
     /**
+     * Get the slim app
+     *
+     * @return SlimApp
+     */
+    public function slim(): SlimApp
+    {
+        return $this->slim;
+    }
+
+    /**
      * Add middleware
      */
     protected function addMiddleware(): void
     {
-        $this->slim->addRoutingMiddleware();
+        $this->slim()->addRoutingMiddleware();
 
-        $this->slim->addErrorMiddleware($this->dev_mode, false, false)
+        $this->slim()
+            ->addErrorMiddleware($this->dev_mode, false, false)
             ->setDefaultErrorHandler($this->error_handler);
 
-        $this->slim->add('csrf');
-        $this->slim->add(ExampleMiddleware::class);
+        $this->slim()->add('csrf');
+        $this->slim()->add(ExampleMiddleware::class);
     }
 
     /**
@@ -146,9 +115,9 @@ class App
     protected function addErrorHandler(): void
     {
         $this->error_handler = new HttpErrorHandler(
-            $this->container(),
-            $this->slim->getCallableResolver(),
-            $this->slim->getResponseFactory()
+            $this->container()->get(),
+            $this->slim()->getCallableResolver(),
+            $this->slim()->getResponseFactory()
         );
     }
 
@@ -183,7 +152,7 @@ class App
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->slim->handle($request);
+        return $this->slim()->handle($request);
     }
 
     /**
@@ -193,6 +162,6 @@ class App
      */
     public function run(): void
     {
-        $this->slim->run();
+        $this->slim()->run();
     }
 }

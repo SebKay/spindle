@@ -32,10 +32,6 @@ class Container
 
     public function addServices(): void
     {
-        if (!$this->services()) {
-            return;
-        }
-
         foreach ($this->services() as $service) {
             $this->container->set(
                 $service->name(),

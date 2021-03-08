@@ -2,17 +2,13 @@
 
 namespace App;
 
+use App\Container\Container;
 use App\Database\Database;
-use App\Database\DatabaseHelpers;
-use App\Dependencies\View;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
 use App\Handlers\ShutdownHandler;
-use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -50,10 +46,10 @@ class App
     {
         $this->dev_mode  = $this->isDevModeEnabled();
 
-        $this->container = new Container();
-        $this->slim      = AppFactory::createFromContainer($this->container());
+        $this->container = new Container($this);
+        $this->slim      = AppFactory::createFromContainer($this->container()->get());
 
-        $this->setupContainer();
+        $this->container()->setup();
         $this->setupSlim();
 
         $this->database = new Database();
@@ -70,45 +66,6 @@ class App
     }
 
     /**
-     * Set up the container
-     */
-    protected function setupContainer(): void
-    {
-        //---- CSRF protection
-        $this->container->set('csrf', function () {
-            $guard = new Guard($this->slim->getResponseFactory());
-
-            $guard->setFailureHandler(function (
-                ServerRequestInterface $request,
-                RequestHandlerInterface $handler
-            ): ResponseInterface {
-                $status_code = 400;
-                $response = $this->slim
-                    ->getResponseFactory()
-                    ->createResponse()
-                    ->withStatus($status_code);
-
-                return $this->container
-                    ->get('view')
-                    ->respond($response, 'layouts/http-error.twig', [
-                        'code'        => $status_code,
-                        'description' => 'There Was An Error',
-                    ]);
-            });
-
-            return $guard;
-        });
-
-        //---- View
-        $this->container->set('view', function () {
-            return new View(
-                __DIR__ . '/../resources/views',
-                ($this->dev_mode ? '' : '.cache/views')
-            );
-        });
-    }
-
-    /**
      * Get the container
      *
      * @return Container
@@ -116,6 +73,16 @@ class App
     public function container(): Container
     {
         return $this->container;
+    }
+
+    /**
+     * Get the container
+     *
+     * @return \Slim\App
+     */
+    public function slim(): \Slim\App
+    {
+        return $this->slim;
     }
 
     /**
@@ -146,7 +113,7 @@ class App
     protected function addErrorHandler(): void
     {
         $this->error_handler = new HttpErrorHandler(
-            $this->container(),
+            $this->container()->get(),
             $this->slim->getCallableResolver(),
             $this->slim->getResponseFactory()
         );

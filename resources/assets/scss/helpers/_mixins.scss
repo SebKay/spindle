@@ -1,0 +1,4 @@
+@mixin rem($pixels) {
+    font-size: $pixels;
+    font-size: rem_calculate($pixels);
+}

@@ -4,12 +4,9 @@ const App = createApp({
     name: 'App',
     data() {
         return {
-            test: 'yas'
+            name: 'Slim Starter'
         }
     },
-    mounted() {
-        console.log('yas');
-    }
 });
 
 App.mount('#app');

@@ -1,26 +1,21 @@
 {% extends 'base.twig' %}
 
 {% block body %}
-    {% verbatim %}
+    <div class="txt-center">
         <p>
-            Test: {{ test }}
+            Welcome, {{ name }}!
         </p>
-    {% endverbatim %}
-    
-    <br>
-    <p>
-        Welcome, {{ name }}!
-    </p>
+    </div>
 
-    <br>
+    <br><br>
 
-    <form method="post" action="">
+    <form class="txt-center" method="post" action="">
         <p>
             <label for="name">
                 Name
             </label>
             <br>
-            <input id="name" type="text" name="name">
+            <input id="name" type="text" name="name" placeholder="e.g. Jim Gordon">
 
             {% if csrf %}
                 <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">

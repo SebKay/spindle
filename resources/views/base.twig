@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body>
-    <div id="app" class="site-wrap">
+    <div id="app" class="site-wrap" v-cloak>
         <header class="site-header">
             {% include "partials/logo.twig" %}
         </header>
@@ -20,9 +20,7 @@
         </main>
 
         <footer class="site-footer">
-            <p>
-                Footer
-            </p>
+            {# Footer #}
         </footer>
     </div>
 

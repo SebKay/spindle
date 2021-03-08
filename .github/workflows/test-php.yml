@@ -9,9 +9,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: nanasess/setup-php@master
+      - uses: shivammathur/setup-php@v2
         with:
-          php-version: "7.4"
+          php-version: '7.4'
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest

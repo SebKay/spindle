@@ -1,0 +1,16 @@
+.form-row {
+    display: flex;
+}
+
+.form-row__item {
+    width: 100%;
+}
+
+.form-row__label {
+    padding-bottom: 12px;
+    display: block;
+}
+
+.form-row:not(:last-child) {
+    @extend %mb-small;
+}

@@ -1,9 +1,12 @@
 let webpack = require('webpack');
 let path = require('path');
 let MiniCssExtractPlugin = require('mini-css-extract-plugin');
+let WebpackNotifierPlugin = require('webpack-notifier');
 
 module.exports = (env, options) => {
     return {
+        stats: 'minimal',
+
         entry: [
             './resources/assets/js/app.js',
             './resources/assets/scss/app.scss',
@@ -27,8 +30,19 @@ module.exports = (env, options) => {
                     test: /\.s[ac]ss$/,
                     use: [
                         MiniCssExtractPlugin.loader,
-                        'css-loader',
-                        'sass-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                url: false
+                            }
+                        },
+                        "postcss-loader",
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true,
+                            },
+                        },
                     ],
                 }
             ],
@@ -37,6 +51,13 @@ module.exports = (env, options) => {
         plugins: [
             new MiniCssExtractPlugin({
                 filename: '../css/app.css',
+            }),
+            new WebpackNotifierPlugin({
+                emoji: true,
+                alwaysNotify: true,
+                title: function (params) {
+                    return `Slim Starter`;
+                }
             }),
         ],
     }

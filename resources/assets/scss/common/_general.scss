@@ -1,5 +1,8 @@
-$test: #e2e2e2;
-
+html,
 body {
-    background: $test;
+    background: #fff;
+}
+
+[v-cloak] {
+    display: none;
 }

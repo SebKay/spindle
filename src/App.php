@@ -98,7 +98,7 @@ class App
             ->setDefaultErrorHandler($this->error_handler);
 
         $this->slim()->add('csrf');
-        $this->slim()->add(ExampleMiddleware::class);
+        // $this->slim()->add(ExampleMiddleware::class);
     }
 
     /**

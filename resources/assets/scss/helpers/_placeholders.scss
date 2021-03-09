@@ -1,0 +1,58 @@
+%h1 {
+    @include rem($h1);
+}
+
+%h2 {
+    @include rem($h2);
+}
+
+%h3 {
+    @include rem($h3);
+}
+
+%h4 {
+    @include rem($h4);
+}
+
+%h5 {
+    @include rem($h5);
+}
+
+%h6 {
+    @include rem($h6);
+}
+
+%txt-small {
+    @include rem(14px);
+}
+
+%txt-regular {
+    @include rem(16px);
+}
+
+%txt-large {
+    @include rem(18px);
+}
+
+%txt-left {
+    // Type
+    text-align: left;
+}
+
+%txt-center {
+    // Type
+    text-align: center;
+}
+
+%txt-right {
+    // Type
+    text-align: right;
+}
+
+%txt-uppercase {
+    // Type
+    text-transform: uppercase;
+    letter-spacing: 0.078rem;
+}
+
+@include spacing(map-get($spacing, 1));

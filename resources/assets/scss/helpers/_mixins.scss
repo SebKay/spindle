@@ -1,0 +1,90 @@
+@mixin rem($pixels) {
+    font-size: $pixels;
+    font-size: rem_calculate($pixels);
+}
+
+@mixin spacing($spacing) {
+    @each $spacing-name, $amount in $spacing {
+        //---- Padding
+        %p-#{$spacing-name},
+        .p-#{$spacing-name} {
+            padding-top: $amount;
+            padding-bottom: $amount;
+            padding-left: $amount;
+            padding-right: $amount;
+        }
+
+        %pv-#{$spacing-name},
+        .pv-#{$spacing-name} {
+            padding-top: $amount;
+            padding-bottom: $amount;
+        }
+
+        %ph-#{$spacing-name},
+        .ph-#{$spacing-name} {
+            padding-left: $amount;
+            padding-right: $amount;
+        }
+
+        %pt-#{$spacing-name},
+        .pt-#{$spacing-name} {
+            padding-top: $amount;
+        }
+
+        %pb-#{$spacing-name},
+        .pb-#{$spacing-name} {
+            padding-bottom: $amount;
+        }
+
+        %pl-#{$spacing-name},
+        .pl-#{$spacing-name} {
+            padding-left: $amount;
+        }
+
+        %pr-#{$spacing-name},
+        .pr-#{$spacing-name} {
+            padding-right: $amount;
+        }
+
+        //---- Margin
+        %m-#{$spacing-name},
+        .m-#{$spacing-name} {
+            margin-top: $amount;
+            margin-bottom: $amount;
+            margin-left: $amount;
+            margin-right: $amount;
+        }
+
+        %mv-#{$spacing-name},
+        .mv-#{$spacing-name} {
+            margin-top: $amount;
+            margin-bottom: $amount;
+        }
+
+        %mh-#{$spacing-name},
+        .mh-#{$spacing-name} {
+            margin-left: $amount;
+            margin-right: $amount;
+        }
+
+        %mt-#{$spacing-name},
+        .mt-#{$spacing-name} {
+            margin-top: $amount;
+        }
+
+        %mb-#{$spacing-name},
+        .mb-#{$spacing-name} {
+            margin-bottom: $amount;
+        }
+
+        %ml-#{$spacing-name},
+        .ml-#{$spacing-name} {
+            margin-left: $amount;
+        }
+
+        %mr-#{$spacing-name},
+        .mr-#{$spacing-name} {
+            margin-right: $amount;
+        }
+    }
+}

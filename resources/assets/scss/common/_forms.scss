@@ -1,0 +1,33 @@
+input,
+textarea,
+select {
+    @extend %txt-regular;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: $border-radius-1;
+    border: $border-2;
+    background: #fff;
+}
+
+input,
+select {
+    height: 50px;
+}
+
+textarea {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    // Type
+    line-height: 140%;
+}
+
+label {
+    @extend %txt-large;
+    // Type
+    font-weight: bold;
+}
+
+button {
+    @extend .btn;
+}

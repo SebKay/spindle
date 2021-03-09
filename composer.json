@@ -1,5 +1,6 @@
 {
     "name": "sebkay/slim-starter",
+    "description": "A simple Slim starter app. Comes with a DI container, Twig for templating, VueJS and Sass.",
     "type": "project",
     "license": "MIT",
     "authors": [

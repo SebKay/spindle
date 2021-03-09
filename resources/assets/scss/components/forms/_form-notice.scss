@@ -1,0 +1,16 @@
+.form-notice {
+    padding: 20px;
+    border-radius: $border-radius-1;
+    border-left: 4px solid #ccc;
+    background: #f5f5f5;
+    // Type
+    text-align: center;
+}
+
+.form-notice--success {
+    border-left-color: $ui-color-success;
+}
+
+.form-notice--error {
+    border-left-color: $ui-color-error;
+}

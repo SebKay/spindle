@@ -1,13 +1,21 @@
 {% extends 'base.twig' %}
 
 {% block body %}
-    <div class="txt-center">
+    <div class="mb-medium txt-center">
         <p>
             Welcome, {{ name }}!
         </p>
     </div>
 
-    <br><br><br><br>
+    {% if form.name %}
+        <div class="mb-small">
+            <div class="form-notice form-notice--success">
+                <p class="form-notice__descripton">
+                    Your name is: <strong>{{ form.name }}</strong>
+                </p>
+            </div>
+        </div>
+    {% endif %}
 
     <form class="txt-center" method="post" action="">
         <div class="form-row">
@@ -33,10 +41,4 @@
             </div>
         </div>
     </form>
-
-    {% if form.name %}
-        <p>
-            Your name is: <strong>{{ form.name }}</strong>
-        </p>
-    {% endif %}
 {% endblock %}

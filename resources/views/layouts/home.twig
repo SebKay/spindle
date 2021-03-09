@@ -7,27 +7,31 @@
         </p>
     </div>
 
-    <br><br>
+    <br><br><br><br>
 
     <form class="txt-center" method="post" action="">
-        <p>
-            <label for="name">
-                Name
-            </label>
-            <br>
-            <input id="name" type="text" name="name" placeholder="e.g. Jim Gordon">
+        <div class="form-row">
+            <div class="form-row__item">
+                <label class="form-row__label" for="name">
+                    Name
+                </label>
 
-            {% if csrf %}
-                <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
-                <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
-            {% endif %}
-        </p>
+                <input id="name" type="text" name="name" placeholder="e.g. Jim Gordon">
+            </div>
+        </div>
 
-        <p>
-            <button>
-                Submit
-            </button>
-        </p>
+        <div class="form-row">
+            <div class="form-row__item">
+                <button>
+                    Submit
+                </button>
+
+                {% if csrf %}
+                    <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
+                    <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
+                {% endif %}
+            </div>
+        </div>
     </form>
 
     {% if form.name %}

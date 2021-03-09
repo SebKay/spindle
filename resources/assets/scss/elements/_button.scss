@@ -1,0 +1,13 @@
+.btn {
+    @extend %txt-small;
+    @extend %txt-uppercase;
+    padding: 16px 26px;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: $border-radius-1;
+    background: $ui-color-1;
+    // Type
+    font-family: $font-family-1;
+    font-weight: bold;
+    color: #fff;
+}

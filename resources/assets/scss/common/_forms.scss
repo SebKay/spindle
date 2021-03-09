@@ -27,3 +27,7 @@ label {
     // Type
     font-weight: bold;
 }
+
+button {
+    @extend .btn;
+}

@@ -48,3 +48,11 @@
     // Type
     text-align: right;
 }
+
+%txt-uppercase {
+    // Type
+    text-transform: uppercase;
+    letter-spacing: 0.078rem;
+}
+
+@include spacing(map-get($spacing, 1));

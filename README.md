@@ -6,6 +6,7 @@ An easy to use [Slim 4](https://www.slimframework.com/) starter project for serv
 
 ## What's Included
 
+- Database models via [Eloquent](https://laravel.com/docs/8.x/eloquent)
 - Dependency Injection via a container
 - CSRF protection
 - Twig for templating
@@ -15,8 +16,9 @@ An easy to use [Slim 4](https://www.slimframework.com/) starter project for serv
 
 ## Why
 
-- Single instance app making building and testing easy.
+- Single instance app makes building and testing easy.
 - No hunting around fragmented include files trying to figure out what's going on.
+- Using [Laravel's](https://laravel.com/) ORM, [Eloquent](https://laravel.com/docs/8.x/eloquent), makes working with the database a breeze.
 - Easily add services to the container by extending the base `App\Container\Service` class.
 
 ## How

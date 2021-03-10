@@ -2,7 +2,7 @@
 
 An easy to use [Slim 4](https://www.slimframework.com/) starter project for server side apps.
 
-![Test PHP](https://github.com/SebKay/slim-starter/workflows/Test%20PHP/badge.svg)
+[![Test PHP](https://github.com/SebKay/slim-starter/actions/workflows/test-php.yml/badge.svg)](https://github.com/SebKay/slim-starter/actions/workflows/test-php.yml)
 
 ## What's Included
 

@@ -48,7 +48,7 @@ class App
         $this->dev_mode = $this->isDevelopmentMode();
 
         $this->container = new Container($this);
-        $this->slim      = AppFactory::createFromContainer($this->container()->get());
+        $this->slim      = AppFactory::createFromContainer($this->container()->injector());
 
         $this->container()->setup();
         $this->setupSlim();
@@ -115,7 +115,7 @@ class App
     protected function addErrorHandler(): void
     {
         $this->error_handler = new HttpErrorHandler(
-            $this->container()->get(),
+            $this->container()->injector(),
             $this->slim()->getCallableResolver(),
             $this->slim()->getResponseFactory()
         );

@@ -24,7 +24,7 @@ class HomeControllerTest extends IntegrationTest
         $get_request = $this->createRequest('GET', '/');
         $this->app->handle($get_request);
 
-        $csrf_guard = $this->app->container()->get()->get('csrf');
+        $csrf_guard = $this->app->container()->injector()->get('csrf');
 
         $post_request = $this->createRequest('POST', '/')
             ->withAddedHeader('Content-Type', 'multipart/form-data')

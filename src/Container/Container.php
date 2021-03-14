@@ -45,8 +45,13 @@ class Container
         $this->addServices();
     }
 
-    public function get(): \DI\Container
+    public function injector(): \DI\Container
     {
         return $this->container;
+    }
+
+    public function get(string $name): mixed
+    {
+        return $this->container->get($name);
     }
 }

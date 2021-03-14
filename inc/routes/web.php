@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var App\App $this
+ */
+
 use App\Controllers\HomeController;
 use Slim\Routing\RouteCollectorProxy;
 

@@ -11,7 +11,7 @@ use App\Handlers\ShutdownHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as SlimApp;
-use \DI\Bridge\Slim\Bridge as AppFactory;
+use DI\Bridge\Slim\Bridge as AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 class App
@@ -70,7 +70,7 @@ class App
     /**
      * Get the container
      *
-     * @return Container
+     * @return \DI\Container
      */
     public function container(): \DI\Container
     {

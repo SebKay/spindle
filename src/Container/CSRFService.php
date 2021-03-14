@@ -9,7 +9,7 @@ use Slim\Csrf\Guard;
 
 class CSRFService extends Service
 {
-    public function name(): string
+    public static function name(): string
     {
         return 'csrf';
     }

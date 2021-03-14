@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Container\Container;
+use App\Container\ContainerCreator;
+use App\Container\CSRFService;
 use App\Database\Database;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
@@ -10,7 +12,9 @@ use App\Handlers\ShutdownHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as SlimApp;
-use Slim\Factory\AppFactory;
+use \DI\Bridge\Slim\Bridge as AppFactory;
+use Slim\Csrf\Guard;
+// use Slim\Factory\AppFactory as AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 class App
@@ -21,9 +25,9 @@ class App
     public $dev_mode;
 
     /**
-     * @var Container
+     * @var ContainerCreator
      */
-    protected $container;
+    protected $container_creator;
 
     /**
      * @var SlimApp
@@ -47,10 +51,10 @@ class App
     {
         $this->dev_mode = $this->isDevelopmentMode();
 
-        $this->container = new Container($this);
-        $this->slim      = AppFactory::createFromContainer($this->container()->injector());
+        $this->container_creator = new ContainerCreator($this);
+        $this->slim      = AppFactory::create($this->container());
 
-        $this->container()->setup();
+        $this->container_creator->setup();
         $this->setupSlim();
 
         $this->database = new Database();
@@ -71,9 +75,9 @@ class App
      *
      * @return Container
      */
-    public function container(): Container
+    public function container(): \DI\Container
     {
-        return $this->container;
+        return $this->container_creator->container();
     }
 
     /**
@@ -97,7 +101,7 @@ class App
             ->addErrorMiddleware($this->dev_mode, false, false)
             ->setDefaultErrorHandler($this->error_handler);
 
-        $this->slim()->add('csrf');
+        $this->slim()->add($this->container()->get('csrf'));
         // $this->slim()->add(ExampleMiddleware::class);
     }
 
@@ -115,7 +119,7 @@ class App
     protected function addErrorHandler(): void
     {
         $this->error_handler = new HttpErrorHandler(
-            $this->container()->injector(),
+            $this->container(),
             $this->slim()->getCallableResolver(),
             $this->slim()->getResponseFactory()
         );

@@ -3,8 +3,9 @@
 namespace App\Container;
 
 use App\App;
+use App\Controllers\HomeController;
 
-class Container
+class ContainerCreator
 {
     /**
      * @var App
@@ -30,7 +31,7 @@ class Container
         ];
     }
 
-    public function addServices(): void
+    protected function addServices(): void
     {
         foreach ($this->services() as $service) {
             $this->container->set(
@@ -40,18 +41,31 @@ class Container
         }
     }
 
+    protected function controllers(): array
+    {
+        return [
+            HomeController::class
+        ];
+    }
+
+    protected function addControllers(): void
+    {
+        foreach ($this->controllers() as $controller) {
+            $this->container->set(
+                $controller,
+                new $controller($this->container())
+            );
+        }
+    }
+
     public function setup(): void
     {
         $this->addServices();
+        $this->addControllers();
     }
 
-    public function injector(): \DI\Container
+    public function container(): \DI\Container
     {
         return $this->container;
-    }
-
-    public function get(string $name): mixed
-    {
-        return $this->container->get($name);
     }
 }

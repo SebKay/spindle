@@ -4,7 +4,6 @@ namespace App;
 
 use App\Container\Container;
 use App\Container\ContainerCreator;
-use App\Container\CSRFService;
 use App\Database\Database;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
@@ -13,8 +12,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as SlimApp;
 use \DI\Bridge\Slim\Bridge as AppFactory;
-use Slim\Csrf\Guard;
-// use Slim\Factory\AppFactory as AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 class App
@@ -52,7 +49,7 @@ class App
         $this->dev_mode = $this->isDevelopmentMode();
 
         $this->container_creator = new ContainerCreator($this);
-        $this->slim      = AppFactory::create($this->container());
+        $this->slim              = AppFactory::create($this->container());
 
         $this->container_creator->setup();
         $this->setupSlim();

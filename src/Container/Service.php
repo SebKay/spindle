@@ -28,7 +28,7 @@ abstract class Service
         $this->dev_mode  = $this->app->dev_mode;
     }
 
-    abstract public function name(): string;
+    abstract public static function name(): string;
 
     abstract public function config();
 }

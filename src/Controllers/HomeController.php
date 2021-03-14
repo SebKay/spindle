@@ -13,17 +13,16 @@ class HomeController extends Controller
      *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @param array $args
      * @return ResponseInterface
      */
-    public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function index(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         return $this->view->respond(
             $response,
             'layouts/home.twig',
             [
-                'name'   => 'Jim',
-                'csrf'   => Helpers::generateCSRFData($this->csrf, $request)
+                'name' => 'Jim',
+                'csrf' => Helpers::generateCSRFData($this->csrf, $request)
             ]
         );
     }
@@ -33,10 +32,9 @@ class HomeController extends Controller
      *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @param array $args
      * @return ResponseInterface
      */
-    public function update(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function update(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         return $this->view->respond(
             $response,

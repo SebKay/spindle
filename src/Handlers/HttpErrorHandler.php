@@ -66,6 +66,8 @@ class HttpErrorHandler extends ErrorHandler
         $type        = self::SERVER_ERROR;
         $description = 'An internal error has occurred while processing your request.';
 
+        // ray($exception);
+
         if ($exception instanceof HttpException) {
             $statusCode  = (int) $exception->getCode();
             $description = $exception->getMessage();

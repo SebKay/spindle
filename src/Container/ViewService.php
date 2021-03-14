@@ -6,7 +6,7 @@ use App\Dependencies\View;
 
 class ViewService extends Service
 {
-    public function name(): string
+    public static function name(): string
     {
         return 'view';
     }

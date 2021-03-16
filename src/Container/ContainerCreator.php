@@ -26,6 +26,7 @@ class ContainerCreator
     protected function services(): array
     {
         return [
+            new LoggerService($this->container, $this->app),
             new CSRFService($this->container, $this->app),
             new ViewService($this->container, $this->app),
         ];

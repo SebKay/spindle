@@ -66,30 +66,4 @@ class Logger implements LoggerInterface
     {
         $this->logger->emergency($message, $context);
     }
-
-    protected function setLevel(string $level): int
-    {
-        $info = MonologLogger::INFO;
-
-        switch ($level) {
-            case 'debug':
-                return MonologLogger::DEBUG;
-            case 'info':
-                return $info;
-            case 'notice':
-                return MonologLogger::NOTICE;
-            case 'warning':
-                return MonologLogger::WARNING;
-            case 'error':
-                return MonologLogger::ERROR;
-            case 'critical':
-                return MonologLogger::CRITICAL;
-            case 'alert':
-                return MonologLogger::ALERT;
-            case 'emergency':
-                return MonologLogger::EMERGENCY;
-            default:
-                return $info;
-        }
-    }
 }

@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Container\Container;
 use App\Container\ContainerCreator;
 use App\Database\Database;
 use App\Middleware\ExampleMiddleware;

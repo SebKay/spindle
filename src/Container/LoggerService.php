@@ -2,7 +2,7 @@
 
 namespace App\Container;
 
-use App\Logging\Logger;
+use App\Dependencies\Logger;
 
 class LoggerService extends Service
 {

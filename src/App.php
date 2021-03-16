@@ -7,7 +7,7 @@ use App\Database\Database;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
 use App\Handlers\ShutdownHandler;
-use App\Logging\Logger;
+use App\Dependencies\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as SlimApp;

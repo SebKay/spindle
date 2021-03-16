@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Middleware;
+namespace Tests\Unit\Dependencies;
 
 use App\Dependencies\View;
 use Tests\Unit\UnitTest;

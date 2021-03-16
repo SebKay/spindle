@@ -7,6 +7,7 @@ use App\Database\Database;
 use App\Middleware\ExampleMiddleware;
 use App\Handlers\HttpErrorHandler;
 use App\Handlers\ShutdownHandler;
+use App\Logging\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as SlimApp;
@@ -36,6 +37,11 @@ class App
     protected $error_handler;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * @var Database
      */
     protected $database;
@@ -51,6 +57,9 @@ class App
         $this->slim              = AppFactory::create($this->container());
 
         $this->container_creator->setup();
+
+        $this->logger = $this->container()->get('logger');
+
         $this->setupSlim();
 
         $this->database = new Database();
@@ -93,12 +102,14 @@ class App
     {
         $this->slim()->addRoutingMiddleware();
 
-        $this->slim()
-            ->addErrorMiddleware($this->dev_mode, false, false)
-            ->setDefaultErrorHandler($this->error_handler);
-
         $this->slim()->add($this->container()->get('csrf'));
-        // $this->slim()->add(ExampleMiddleware::class);
+
+        $this->slim()->addErrorMiddleware(
+            $this->isDevelopmentMode(),
+            $this->isDevelopmentMode(),
+            $this->isDevelopmentMode(),
+            $this->logger
+        );
     }
 
     /**
@@ -110,36 +121,10 @@ class App
     }
 
     /**
-     * Add error handler
-     */
-    protected function addErrorHandler(): void
-    {
-        $this->error_handler = new HttpErrorHandler(
-            $this->container(),
-            $this->slim()->getCallableResolver(),
-            $this->slim()->getResponseFactory()
-        );
-    }
-
-    /**
-     * Add shutdown (fatal error) handler
-     */
-    protected function addShutdownHandler(): void
-    {
-        $serverRequestCreator = ServerRequestCreatorFactory::create();
-        $request              = $serverRequestCreator->createServerRequestFromGlobals();
-        $shutdownHandler      = new ShutdownHandler($request, $this->error_handler, $this->dev_mode);
-
-        \register_shutdown_function($shutdownHandler);
-    }
-
-    /**
      * Setup the app (called in the constructor)
      */
     protected function setupSlim(): void
     {
-        $this->addErrorHandler();
-        $this->addShutdownHandler();
         $this->addMiddleware();
         $this->addRoutes();
     }

@@ -8,7 +8,9 @@ use Psr\Log\LoggerInterface;
 
 class Logger implements LoggerInterface
 {
-    protected $level;
+    /**
+     * @var MonologLogger
+     */
     protected $logger;
 
     public function __construct(string $log_path = null)

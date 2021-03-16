@@ -4,15 +4,11 @@ namespace App;
 
 use App\Container\ContainerCreator;
 use App\Database\Database;
-use App\Middleware\ExampleMiddleware;
-use App\Handlers\HttpErrorHandler;
-use App\Handlers\ShutdownHandler;
 use App\Dependencies\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as SlimApp;
 use DI\Bridge\Slim\Bridge as AppFactory;
-use Slim\Factory\ServerRequestCreatorFactory;
 
 class App
 {
@@ -30,11 +26,6 @@ class App
      * @var SlimApp
      */
     protected $slim;
-
-    /**
-     * @var HttpErrorHandler
-     */
-    protected $error_handler;
 
     /**
      * @var Logger

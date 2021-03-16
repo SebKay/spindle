@@ -35,9 +35,6 @@ class ContainerCreator
     protected function addServices(): void
     {
         foreach ($this->services() as $service_class) {
-            /**
-             * @var Service
-             */
             $service = new $service_class($this->container(), $this->app);
 
             if ($service instanceof Service) {

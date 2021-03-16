@@ -16,7 +16,7 @@ class Logger implements LoggerInterface
         $log_path = ($log_path ?: __DIR__ . '/../../logs/app.log');
 
         $this->logger = new MonologLogger('App');
-        
+
         $this->logger->pushHandler(
             new StreamHandler($log_path)
         );

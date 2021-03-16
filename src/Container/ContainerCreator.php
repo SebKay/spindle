@@ -26,19 +26,26 @@ class ContainerCreator
     protected function services(): array
     {
         return [
-            new LoggerService($this->container, $this->app),
-            new CSRFService($this->container, $this->app),
-            new ViewService($this->container, $this->app),
+            LoggerService::class,
+            CSRFService::class,
+            ViewService::class
         ];
     }
 
     protected function addServices(): void
     {
-        foreach ($this->services() as $service) {
-            $this->container->set(
-                $service->name(),
-                $service->config()
-            );
+        foreach ($this->services() as $service_class) {
+            /**
+             * @var Service
+             */
+            $service = new $service_class($this->container(), $this->app);
+
+            if ($service instanceof Service) {
+                $this->container->set(
+                    $service->name(),
+                    $service->config()
+                );
+            }
         }
     }
 

@@ -106,8 +106,8 @@ class App
 
         $this->slim()->addErrorMiddleware(
             $this->isDevelopmentMode(),
-            $this->isDevelopmentMode(),
-            $this->isDevelopmentMode(),
+            true,
+            true,
             $this->logger
         );
     }

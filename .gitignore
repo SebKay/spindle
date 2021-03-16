@@ -4,6 +4,7 @@ vendor/
 coverage/
 .cache/
 public/assets/
+logs/
 
 # Files
 .phpunit.result.cache

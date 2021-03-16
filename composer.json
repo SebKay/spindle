@@ -28,7 +28,8 @@
         "twig/twig": "^3.1",
         "slim/csrf": "^1.0",
         "illuminate/database": "^8.27",
-        "fakerphp/faker": "^1.13"
+        "fakerphp/faker": "^1.13",
+        "monolog/monolog": "^2.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",

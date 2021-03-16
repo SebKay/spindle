@@ -2,17 +2,13 @@
 
 namespace App;
 
-use App\Container\Container;
 use App\Container\ContainerCreator;
 use App\Database\Database;
-use App\Middleware\ExampleMiddleware;
-use App\Handlers\HttpErrorHandler;
-use App\Handlers\ShutdownHandler;
+use App\Dependencies\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as SlimApp;
 use DI\Bridge\Slim\Bridge as AppFactory;
-use Slim\Factory\ServerRequestCreatorFactory;
 
 class App
 {
@@ -32,9 +28,9 @@ class App
     protected $slim;
 
     /**
-     * @var HttpErrorHandler
+     * @var Logger
      */
-    protected $error_handler;
+    protected $logger;
 
     /**
      * @var Database
@@ -52,6 +48,9 @@ class App
         $this->slim              = AppFactory::create($this->container());
 
         $this->container_creator->setup();
+
+        $this->logger = $this->container()->get('logger');
+
         $this->setupSlim();
 
         $this->database = new Database();
@@ -94,12 +93,14 @@ class App
     {
         $this->slim()->addRoutingMiddleware();
 
-        $this->slim()
-            ->addErrorMiddleware($this->dev_mode, false, false)
-            ->setDefaultErrorHandler($this->error_handler);
-
         $this->slim()->add($this->container()->get('csrf'));
-        // $this->slim()->add(ExampleMiddleware::class);
+
+        $this->slim()->addErrorMiddleware(
+            $this->isDevelopmentMode(),
+            true,
+            true,
+            $this->logger
+        );
     }
 
     /**
@@ -111,36 +112,10 @@ class App
     }
 
     /**
-     * Add error handler
-     */
-    protected function addErrorHandler(): void
-    {
-        $this->error_handler = new HttpErrorHandler(
-            $this->container(),
-            $this->slim()->getCallableResolver(),
-            $this->slim()->getResponseFactory()
-        );
-    }
-
-    /**
-     * Add shutdown (fatal error) handler
-     */
-    protected function addShutdownHandler(): void
-    {
-        $serverRequestCreator = ServerRequestCreatorFactory::create();
-        $request              = $serverRequestCreator->createServerRequestFromGlobals();
-        $shutdownHandler      = new ShutdownHandler($request, $this->error_handler, $this->dev_mode);
-
-        \register_shutdown_function($shutdownHandler);
-    }
-
-    /**
      * Setup the app (called in the constructor)
      */
     protected function setupSlim(): void
     {
-        $this->addErrorHandler();
-        $this->addShutdownHandler();
         $this->addMiddleware();
         $this->addRoutes();
     }

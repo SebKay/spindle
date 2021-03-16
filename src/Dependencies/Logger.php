@@ -11,11 +11,14 @@ class Logger implements LoggerInterface
     protected $level;
     protected $logger;
 
-    public function __construct()
+    public function __construct(string $log_path = null)
     {
+        $log_path = ($log_path ?: __DIR__ . '/../../logs/app.log');
+
         $this->logger = new MonologLogger('App');
+        
         $this->logger->pushHandler(
-            new StreamHandler(__DIR__ . '/../../logs/app.log')
+            new StreamHandler($log_path)
         );
     }
 

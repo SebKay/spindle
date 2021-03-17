@@ -29,7 +29,7 @@ class Helpers
         ];
     }
 
-    public static function httpStatuses()
+    public static function httpStatuses(): array
     {
         return [
             100 => 'Continue',
@@ -91,8 +91,12 @@ class Helpers
         ];
     }
 
-    public static function getHttpStatusMessage(int $code)
+    /**
+     * @param int|string $code
+     * @return string
+     */
+    public static function getHttpStatusMessage($code): string
     {
-        return self::httpStatuses()[$code] ?? null;
+        return (string) (self::httpStatuses()[$code] ?? '');
     }
 }

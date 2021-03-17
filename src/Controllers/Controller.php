@@ -23,11 +23,6 @@ abstract class Controller
      */
     protected $csrf;
 
-    /**
-     * Set up
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->container = $container;

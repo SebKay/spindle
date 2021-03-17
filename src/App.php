@@ -118,7 +118,10 @@ class App
         $error_handler = $this->error_middleware->getDefaultErrorHandler();
 
         if ($error_handler instanceof SlimErrorHandler) {
-            $error_handler->registerErrorRenderer('text/html', ErrorRendererHTML::class);
+            $error_handler->registerErrorRenderer(
+                'text/html',
+                $this->container()->get('error-renderer-html')
+            );
         }
     }
 

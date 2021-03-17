@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as SlimApp;
 use DI\Bridge\Slim\Bridge as AppFactory;
+use Slim\Handlers\ErrorHandler as SlimErrorHandler;
+use Slim\Middleware\ErrorMiddleware;
 
 class App
 {
@@ -26,6 +28,11 @@ class App
      * @var SlimApp
      */
     protected $slim;
+
+    /**
+     * @var ErrorMiddleware
+     */
+    protected $error_middleware;
 
     /**
      * @var Logger
@@ -95,12 +102,24 @@ class App
 
         $this->slim()->add($this->container()->get('csrf'));
 
-        $this->slim()->addErrorMiddleware(
+        $this->error_middleware = $this->slim()->addErrorMiddleware(
             $this->isDevelopmentMode(),
             true,
             true,
             $this->logger
         );
+    }
+
+    /**
+     * Add error rendering
+     */
+    protected function addErrorRenderers(): void
+    {
+        $error_handler = $this->error_middleware->getDefaultErrorHandler();
+
+        if ($error_handler instanceof SlimErrorHandler) {
+            $error_handler->registerErrorRenderer('text/html', ErrorRendererHTML::class);
+        }
     }
 
     /**
@@ -117,6 +136,7 @@ class App
     protected function setupSlim(): void
     {
         $this->addMiddleware();
+        $this->addErrorRenderers();
         $this->addRoutes();
     }
 

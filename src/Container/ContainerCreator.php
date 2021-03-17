@@ -27,6 +27,7 @@ class ContainerCreator
     {
         return [
             LoggerService::class,
+            ErrorRendererHTMLService::class,
             CSRFService::class,
             ViewService::class
         ];

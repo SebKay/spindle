@@ -16,7 +16,7 @@ class HomeController extends Controller
      * @return ResponseInterface
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
-    {    
+    {     
         return $this->view->respond(
             $response,
             'layouts/home.twig',

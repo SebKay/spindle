@@ -3,7 +3,11 @@
 {% block body %}
     <div class="txt-center">
         <h2>
-            {{ code }} - {{ description }}
+            {{ code }}
+            {% if description %}
+                -
+                {{ description }}
+            {% endif %}
         </h2>
 
         <br>

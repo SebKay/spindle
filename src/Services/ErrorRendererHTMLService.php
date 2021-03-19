@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Container;
+namespace App\Services;
 
 use App\ErrorRendererHTML;
 

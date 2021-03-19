@@ -13,7 +13,7 @@ class Config
 
     protected function setServices(): array
     {
-        $file = '../config/services.php';
+        $file = __DIR__ . '/../config/services.php';
 
         if (!file_exists($file)) {
             return [];

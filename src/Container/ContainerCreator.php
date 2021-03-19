@@ -5,6 +5,7 @@ namespace App\Container;
 use App\App;
 use App\Config;
 use App\Controllers\HomeController;
+use App\Services\Service;
 
 class ContainerCreator
 {

@@ -3,10 +3,10 @@
  * Set container services
  */
 
-use App\Container\CSRFService;
-use App\Container\ErrorRendererHTMLService;
-use App\Container\LoggerService;
-use App\Container\ViewService;
+use App\Services\CSRFService;
+use App\Services\ErrorRendererHTMLService;
+use App\Services\LoggerService;
+use App\Services\ViewService;
 
 return [
     LoggerService::class,

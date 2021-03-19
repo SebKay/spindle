@@ -4,7 +4,6 @@ namespace App\Container;
 
 use App\App;
 use App\Config;
-use App\Controllers\HomeController;
 use App\Services\Service;
 
 class ContainerCreator
@@ -46,9 +45,7 @@ class ContainerCreator
 
     protected function controllers(): array
     {
-        return [
-            HomeController::class
-        ];
+        return Config::getControllers();
     }
 
     protected function addControllers(): void

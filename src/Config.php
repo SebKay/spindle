@@ -9,39 +9,33 @@ class Config
 
     public function __construct()
     {
-        $this->services = $this->setServices();
-        $this->controllers = $this->setControllers();
+        $this->services    = $this->set('services');
+        $this->controllers = $this->set('controllers');
     }
 
-    protected function setServices(): array
+    protected function set(string $filename): array
     {
-        $file = __DIR__ . '/../config/services.php';
+        $file = __DIR__ . "/../config/$filename.php";
 
         if (!file_exists($file)) {
             return [];
         }
 
         return include $file;
+    }
+
+    protected function get(string $property): array
+    {
+        return (new self)->{$property};
     }
 
     public static function getServices(): array
     {
-        return (new self())->services;
-    }
-
-    protected function setControllers(): array
-    {
-        $file = __DIR__ . '/../config/controllers.php';
-
-        if (!file_exists($file)) {
-            return [];
-        }
-
-        return include $file;
+        return (new self)->get('services');
     }
 
     public static function getControllers(): array
     {
-        return (new self())->controllers;
+        return (new self)->get('controllers');
     }
 }

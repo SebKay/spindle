@@ -3,6 +3,7 @@
 namespace App\Container;
 
 use App\App;
+use App\Config;
 use App\Controllers\HomeController;
 
 class ContainerCreator
@@ -25,12 +26,7 @@ class ContainerCreator
 
     protected function services(): array
     {
-        return [
-            LoggerService::class,
-            ErrorRendererHTMLService::class,
-            CSRFService::class,
-            ViewService::class
-        ];
+        return Config::getServices();
     }
 
     protected function addServices(): void

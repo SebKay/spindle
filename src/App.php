@@ -15,11 +15,6 @@ use Slim\Middleware\ErrorMiddleware;
 class App
 {
     /**
-     * @var boolean
-     */
-    public $dev_mode;
-
-    /**
      * @var ContainerCreator
      */
     protected $container_creator;
@@ -49,8 +44,6 @@ class App
      */
     public function __construct()
     {
-        $this->dev_mode = $this->isDevelopmentMode();
-
         $this->container_creator = new ContainerCreator($this);
         $this->slim              = AppFactory::create($this->container());
 

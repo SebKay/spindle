@@ -4,7 +4,14 @@ namespace App;
 
 class Config
 {
+    /**
+     * @var array
+     */
     protected $services;
+
+    /**
+     * @var array
+     */
     protected $controllers;
 
     public function __construct()
@@ -26,16 +33,16 @@ class Config
 
     protected function get(string $property): array
     {
-        return (new self)->{$property};
+        return (new self())->{$property};
     }
 
     public static function getServices(): array
     {
-        return (new self)->get('services');
+        return (new self())->get('services');
     }
 
     public static function getControllers(): array
     {
-        return (new self)->get('controllers');
+        return (new self())->get('controllers');
     }
 }

@@ -16,11 +16,11 @@ class Config
 
     public function __construct()
     {
-        $this->services    = $this->set('services');
-        $this->controllers = $this->set('controllers');
+        $this->services    = (new self())->set('services');
+        $this->controllers = (new self())->set('controllers');
     }
 
-    protected function set(string $filename): array
+    public static function set(string $filename): array
     {
         $file = __DIR__ . "/../config/$filename.php";
 

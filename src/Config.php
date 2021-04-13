@@ -16,8 +16,8 @@ class Config
 
     public function __construct()
     {
-        $this->services    = (new self())->set('services');
-        $this->controllers = (new self())->set('controllers');
+        $this->services    = self::set('services');
+        $this->controllers = self::set('controllers');
     }
 
     public static function set(string $filename): array

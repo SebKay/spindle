@@ -1,0 +1,16 @@
+name: Webpack
+
+on: [pull_request]
+
+jobs:
+  test-webpack-prod-build:
+    name: Test production build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.3.4
+
+    - name: Install Yarn dependencies
+      run: yarn install --prod --non-interactive
+
+    - name: Build for production
+      run: yarn run prod

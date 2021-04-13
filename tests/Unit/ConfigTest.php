@@ -9,7 +9,7 @@ class ConfigTest extends UnitTest
     /**
      * @testdox set() returns and empty array when the file doesn't exist
      */
-    public function test_invalid_file_return_empty_array()
+    public function test_invalid_file_returns_empty_array()
     {
         $set = Config::set('test.php');
 

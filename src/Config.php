@@ -31,18 +31,13 @@ class Config
         return include $file;
     }
 
-    protected function get(string $property): array
-    {
-        return (new self())->{$property};
-    }
-
     public static function getServices(): array
     {
-        return (new self())->get('services');
+        return (new self())->services;
     }
 
     public static function getControllers(): array
     {
-        return (new self())->get('controllers');
+        return (new self())->controllers;
     }
 }

@@ -24,14 +24,9 @@ class ContainerCreator
         $this->container = new \DI\Container();
     }
 
-    protected function services(): array
-    {
-        return Config::getServices();
-    }
-
     protected function addServices(): void
     {
-        foreach ($this->services() as $service_class) {
+        foreach (Config::getServices() as $service_class) {
             $service = new $service_class($this->container(), $this->app);
 
             if ($service instanceof Service) {
@@ -43,14 +38,9 @@ class ContainerCreator
         }
     }
 
-    protected function controllers(): array
-    {
-        return Config::getControllers();
-    }
-
     protected function addControllers(): void
     {
-        foreach ($this->controllers() as $controller) {
+        foreach (Config::getControllers() as $controller) {
             $this->container->set(
                 $controller,
                 new $controller($this->container())

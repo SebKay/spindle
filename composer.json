@@ -1,6 +1,6 @@
 {
-    "name": "sebkay/slim-starter",
-    "description": "An easy to use Slim 4 starter project for server side apps. Comes with a DI container, Twig for templating, VueJS and Sass.",
+    "name": "sebkay/spindle",
+    "description": "An easy to use Slim 4 starter app. Comes with a DI container, Eloquent ORM, Twig for templating, VueJS and Sass.",
     "type": "project",
     "license": "MIT",
     "authors": [

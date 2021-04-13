@@ -56,7 +56,7 @@ module.exports = (env, options) => {
                 emoji: true,
                 alwaysNotify: true,
                 title: function (params) {
-                    return `Slim Starter`;
+                    return `Spindle`;
                 }
             }),
         ],

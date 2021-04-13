@@ -1,8 +1,8 @@
-# Slim Starter
+# Spindle
 
 An easy to use [Slim 4](https://www.slimframework.com/) starter project for server side apps.
 
-[![Test PHP](https://github.com/SebKay/slim-starter/actions/workflows/test-php.yml/badge.svg)](https://github.com/SebKay/slim-starter/actions/workflows/test-php.yml)
+[![Test PHP](https://github.com/SebKay/spindle/actions/workflows/test-php.yml/badge.svg)](https://github.com/SebKay/spindle/actions/workflows/test-php.yml)
 
 ## What's Included
 
@@ -26,5 +26,5 @@ An easy to use [Slim 4](https://www.slimframework.com/) starter project for serv
 ### New Project
 
 ```shell
-composer create-project sebkay/slim-starter project-name
+composer create-project sebkay/spindle project-name
 ```

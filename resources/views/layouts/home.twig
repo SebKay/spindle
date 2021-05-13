@@ -2,43 +2,59 @@
 
 {% block body %}
     <div class="mb-medium txt-center">
+        <h2>
+            Modal Example
+        </h2>
+        
+        <br>
+        
         <p>
-            Welcome, {{ name }}!
+            <button @click="openModal()">
+                Open Modal
+            </button>
         </p>
     </div>
 
-    {% if form.name %}
-        <div class="mb-small">
-            <div class="form-notice form-notice--success">
-                <p class="form-notice__descripton">
-                    Your name is: <strong>{{ form.name }}</strong>
-                </p>
+    <div class="txt-center">
+        <h2>
+            Form Example
+        </h2>
+
+        <br>
+
+        {% if form.name %}
+            <div class="mb-small">
+                <div class="form-notice form-notice--success">
+                    <p class="form-notice__descripton">
+                        Your name is: <strong>{{ form.name }}</strong>
+                    </p>
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
 
-    <form class="txt-center" method="post" action="">
-        <div class="form-row">
-            <div class="form-row__item">
-                <label class="form-row__label" for="name">
-                    Name
-                </label>
+        <form class="txt-center" method="post" action="">
+            <div class="form-row">
+                <div class="form-row__item">
+                    <label class="form-row__label" for="name">
+                        Name
+                    </label>
 
-                <input id="name" type="text" name="name" placeholder="e.g. Jim Gordon">
+                    <input id="name" type="text" name="name" placeholder="e.g. Jim Gordon">
+                </div>
             </div>
-        </div>
 
-        <div class="form-row">
-            <div class="form-row__item">
-                <button>
-                    Submit
-                </button>
+            <div class="form-row">
+                <div class="form-row__item">
+                    <button>
+                        Submit
+                    </button>
 
-                {% if csrf %}
-                    <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
-                    <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
-                {% endif %}
+                    {% if csrf %}
+                        <input type="hidden" name="{{ csrf.keys.name }}" value="{{ csrf.name }}">
+                        <input type="hidden" name="{{ csrf.keys.value }}" value="{{ csrf.value }}">
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 <template>
-    <div :id="id" class="modal" v-show="visible">
+    <div :id="id" class="modal">
         <div class="modal__outer">
             <div class="modal__inner">
                 <div class="modal__header">
@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="modal__footer">
-                    <button class="btn">
+                    <button class="btn" @click="close()">
                         Close
                     </button>
                 </div>
@@ -26,12 +26,18 @@
     export default {
         data() {
             return {
-                visible: false,
+                //
             }
         },
 
         props: [
             'id',
         ],
-    }
+
+        methods: {
+            close() {
+                this.$emit('close-modal');
+            },
+        },
+    };
 </script>

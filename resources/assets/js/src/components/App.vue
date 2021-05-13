@@ -18,7 +18,18 @@
         data() {
             return {
                 title: 'Spindle',
+                modalVisible: false,
             }
+        },
+    
+        methods: {
+            openModal() {
+                this.modalVisible = true;
+            },
+
+            closeModal() {
+                this.modalVisible = false;
+            },
         },
     };
 </script>

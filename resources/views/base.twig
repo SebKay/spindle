@@ -23,15 +23,7 @@
             </p>
         </app-footer>
 
-        <br><br>
-
-        <p>
-            <a href="#">
-                Open Modal
-            </a>
-        </p>
-
-        <modal id="example">
+        <modal id="example" v-show="modalVisible" @close-modal="closeModal()">
             <template v-slot:title>
                 Modal Example
             </template>

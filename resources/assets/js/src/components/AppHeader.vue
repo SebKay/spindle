@@ -18,5 +18,5 @@
             }
         },
         props: ['title'],
-    }
+    };
 </script>

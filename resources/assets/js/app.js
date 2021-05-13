@@ -1,12 +1,4 @@
 import { createApp } from 'vue';
+import App from './src/components/App.vue';
 
-const App = createApp({
-    name: 'App',
-    data() {
-        return {
-            name: 'Spindle'
-        }
-    },
-});
-
-App.mount('#app');
+createApp(App).mount('#app')

@@ -10,7 +10,19 @@
     <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body>
-    <div id="app" class="site-wrap" v-cloak></div>
+    <div id="app" class="site-wrap" v-cloak>
+        <app-header :title="title"></app-header>
+
+        <app-main>
+            {{ block('body') }}
+        </app-main>
+
+        <app-footer>
+            <p>
+                &copy; {{ "now" | date('Y') }}. All rights reserved.
+            </p>
+        </app-footer>
+    </div>
 
     <script src="/assets/js/app.js"></script>
 </body>

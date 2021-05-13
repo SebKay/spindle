@@ -1,13 +1,7 @@
 <template>
-    <header class="site-header">
-        <h1>
-            <a href="/">
-                {{ title }}
-            </a>
-        </h1>
-
+    <footer class="site-footer">
         <slot></slot>
-    </header>
+    </footer>
 </template>
 
 <script>
@@ -17,6 +11,5 @@
                 //
             }
         },
-        props: ['title'],
     }
 </script>

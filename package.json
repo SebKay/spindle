@@ -11,12 +11,22 @@
         "vue-loader": "^16.2",
         "webpack": "^5.21.2",
         "webpack-cli": "^4.5.0",
-        "webpack-notifier": "^1.13.0"
+        "webpack-notifier": "^1.13.0",
+        "postcss": "^8.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14",
+        "@vue/test-utils": "^2.0.0-0",
+        "vue-jest": "^5.0.0-0",
+        "@vue/cli-plugin-unit-jest": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "@vue/cli-plugin-babel": "~4.5.0"
     },
     "scripts": {
         "dev": "webpack --mode=development",
         "prod": "webpack --mode=production",
-        "watch": "webpack --mode=development --watch"
+        "watch": "webpack --mode=development --watch",
+        "tests:unit": "vue-cli-service test:unit"
     },
     "postcss": {
         "plugins": [
@@ -27,5 +37,16 @@
         "> 1%",
         "last 1 version",
         "not dead"
-    ]
+    ],
+    "babel": {
+        "presets": [
+            "@vue/cli-plugin-babel/preset"
+        ]
+    },
+    "jest": {
+        "preset": "@vue/cli-plugin-unit-jest",
+        "transform": {
+            "^.+\\.vue$": "vue-jest"
+        }
+    }
 }

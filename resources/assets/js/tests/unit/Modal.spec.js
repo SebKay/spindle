@@ -2,8 +2,8 @@ import { shallowMount } from '@vue/test-utils'
 
 import Modal from '../../src/components/Modal.vue';
 
-describe('Counter.vue', () => {
-    it('emits the close-modal event', () => {
+describe('Modal.vue', () => {
+    it('Emits the close-modal event', () => {
         const wrapper = shallowMount(Modal);
 
         wrapper.find('button').trigger('click');

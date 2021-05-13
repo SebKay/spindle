@@ -8,6 +8,6 @@ describe('Counter.vue', () => {
 
         wrapper.find('button').trigger('click');
 
-        expect(wrapper.emitted()).toHaveProperty('close-modal')
+        expect(wrapper.emitted()).toHaveProperty('close-modal');
     });
 });

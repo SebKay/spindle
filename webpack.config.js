@@ -7,21 +7,23 @@ module.exports = (env, options) => {
     return {
         stats: 'minimal',
 
-        entry: [
-            './resources/assets/js/app.js',
-            './resources/assets/scss/app.scss',
-        ],
+        entry: {
+            app: [
+                './resources/assets/js/app.js',
+                './resources/assets/scss/app.scss',
+            ],
+        },
 
         output: {
             path: path.resolve(__dirname, 'public/assets/js'),
-            filename: 'app.js',
+            filename: '[name].js',
             publicPath: './public',
         },
 
         resolve: {
             alias: {
                 'vue': 'vue/dist/vue.esm-bundler.js'
-            }
+            },
         },
 
         module: {
@@ -33,8 +35,8 @@ module.exports = (env, options) => {
                         {
                             loader: 'css-loader',
                             options: {
-                                url: false
-                            }
+                                url: false,
+                            },
                         },
                         "postcss-loader",
                         {
@@ -50,14 +52,14 @@ module.exports = (env, options) => {
 
         plugins: [
             new MiniCssExtractPlugin({
-                filename: '../css/app.css',
+                filename: '../css/[name].css',
             }),
             new WebpackNotifierPlugin({
                 emoji: true,
                 alwaysNotify: true,
                 title: function (params) {
                     return `Spindle`;
-                }
+                },
             }),
         ],
     }

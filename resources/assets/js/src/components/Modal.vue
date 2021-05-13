@@ -1,9 +1,9 @@
 <template>
     <transition name="fade">
-        <div :id="id" class="modal">
+        <div class="modal">
             <div class="modal__outer">
                 <div class="modal__inner">
-                    <div class="modal__header">
+                    <div class="modal__header" v-if="$slots.title">
                         <h6 class="modal__title">
                             <slot name="title"></slot>
                         </h6>
@@ -31,10 +31,6 @@
                 //
             }
         },
-
-        props: [
-            'id',
-        ],
 
         methods: {
             close() {

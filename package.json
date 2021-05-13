@@ -1,9 +1,4 @@
 {
-    "browserslist": [
-        "> 1%",
-        "last 1 version",
-        "not dead"
-    ],
     "dependencies": {
         "autoprefixer": "^10.2.5",
         "css-loader": "^5.0.2",
@@ -20,5 +15,15 @@
         "dev": "webpack --mode=development",
         "prod": "webpack --mode=production",
         "watch": "webpack --mode=development --watch"
-    }
+    },
+    "postcss": {
+        "plugins": [
+            "autoprefixer"
+        ]
+    },
+    "browserslist": [
+        "> 1%",
+        "last 1 version",
+        "not dead"
+    ]
 }

@@ -22,6 +22,24 @@
                 &copy; {{ "now" | date('Y') }}. All rights reserved.
             </p>
         </app-footer>
+
+        <br><br>
+
+        <p>
+            <a href="#">
+                Open Modal
+            </a>
+        </p>
+
+        <modal id="example">
+            <template v-slot:title>
+                Modal Example
+            </template>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed purus sapien, mattis quis orci quis, dignissim tempor augue. Sed in dictum est, et ultrices justo. Quisque hendrerit pulvinar iaculis.
+            </p>
+        </modal>
     </div>
 
     <script src="/assets/js/app.js"></script>

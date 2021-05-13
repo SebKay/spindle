@@ -3,6 +3,8 @@
     import AppMain from './AppMain.vue';
     import AppFooter from './AppFooter.vue';
 
+    import Modal from './Modal.vue';
+
     export default {
         name: 'App',
 
@@ -10,6 +12,7 @@
             AppHeader,
             AppMain,
             AppFooter,
+            Modal,
         },
 
         data() {

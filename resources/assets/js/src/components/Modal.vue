@@ -1,0 +1,37 @@
+<template>
+    <div :id="id" class="modal" v-show="visible">
+        <div class="modal__outer">
+            <div class="modal__inner">
+                <div class="modal__header">
+                    <h6 class="modal__title">
+                        <slot name="title"></slot>
+                    </h6>
+                </div>
+
+                <div class="modal__content">
+                    <slot></slot>
+                </div>
+
+                <div class="modal__footer">
+                    <button class="btn">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                visible: false,
+            }
+        },
+
+        props: [
+            'id',
+        ],
+    }
+</script>

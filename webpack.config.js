@@ -1,5 +1,6 @@
 let webpack = require('webpack');
 let path = require('path');
+const { VueLoaderPlugin } = require('vue-loader');
 let MiniCssExtractPlugin = require('mini-css-extract-plugin');
 let WebpackNotifierPlugin = require('webpack-notifier');
 
@@ -29,6 +30,15 @@ module.exports = (env, options) => {
         module: {
             rules: [
                 {
+                    test: /\.(js)$/,
+                    exclude: /node_modules/,
+                    use: ['babel-loader'],
+                },
+                {
+                    test: /\.vue$/,
+                    use: ['vue-loader'],
+                },
+                {
                     test: /\.s[ac]ss$/,
                     use: [
                         MiniCssExtractPlugin.loader,
@@ -51,6 +61,7 @@ module.exports = (env, options) => {
         },
 
         plugins: [
+            new VueLoaderPlugin(),
             new MiniCssExtractPlugin({
                 filename: '../css/[name].css',
             }),

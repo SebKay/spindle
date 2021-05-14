@@ -11,17 +11,27 @@
 </head>
 <body>
     <div id="app" class="site-wrap" v-cloak>
-        <header class="site-header">
-            {% include "partials/logo.twig" %}
-        </header>
+        <app-header :title="title"></app-header>
 
-        <main class="site-main">
+        <app-main>
             {{ block('body') }}
-        </main>
+        </app-main>
 
-        <footer class="site-footer">
-            {# Footer #}
-        </footer>
+        <app-footer>
+            <p>
+                &copy; {{ "now" | date('Y') }}. All rights reserved.
+            </p>
+        </app-footer>
+
+        <modal v-show="modalVisible" @close-modal="closeModal()">
+            <template v-slot:title>
+                Modal Example
+            </template>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed purus sapien, mattis quis orci quis, dignissim tempor augue. Sed in dictum est, et ultrices justo. Quisque hendrerit pulvinar iaculis.
+            </p>
+        </modal>
     </div>
 
     <script src="/assets/js/app.js"></script>

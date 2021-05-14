@@ -1,20 +1,34 @@
 {
     "dependencies": {
-        "autoprefixer": "^10.2.5",
-        "css-loader": "^5.0.2",
-        "mini-css-extract-plugin": "^1.3.6",
-        "postcss-loader": "^5.1.0",
-        "sass": "^1.32.7",
-        "sass-loader": "^11.0.1",
-        "vue": "^3.0.5",
-        "webpack": "^5.21.2",
-        "webpack-cli": "^4.5.0",
-        "webpack-notifier": "^1.13.0"
+        "@babel/core": "^7.14",
+        "@babel/preset-env": "^7.14",
+        "@vue/cli-plugin-babel": "~4.5",
+        "@vue/compiler-sfc": "^3.0",
+        "autoprefixer": "^10.2",
+        "babel-loader": "^8.2.2",
+        "css-loader": "^5.0",
+        "mini-css-extract-plugin": "^1.3",
+        "postcss": "^8.1",
+        "postcss-loader": "^5.1",
+        "sass": "^1.32",
+        "sass-loader": "^11.0",
+        "vue": "^3.0",
+        "vue-loader": "^16.2",
+        "webpack": "^5.21",
+        "webpack-cli": "^4.5",
+        "webpack-notifier": "^1.13"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-unit-jest": "~4.5",
+        "@vue/cli-service": "~4.5",
+        "@vue/test-utils": "^2.0.0-0",
+        "vue-jest": "^5.0.0-0"
     },
     "scripts": {
         "dev": "webpack --mode=development",
         "prod": "webpack --mode=production",
-        "watch": "webpack --mode=development --watch"
+        "watch": "webpack --mode=development --watch",
+        "test:unit": "vue-cli-service test:unit"
     },
     "postcss": {
         "plugins": [
@@ -25,5 +39,17 @@
         "> 1%",
         "last 1 version",
         "not dead"
-    ]
+    ],
+    "babel": {
+        "presets": [
+            "@babel/preset-env",
+            "@vue/cli-plugin-babel/preset"
+        ]
+    },
+    "jest": {
+        "preset": "@vue/cli-plugin-unit-jest",
+        "transform": {
+            "^.+\\.vue$": "vue-jest"
+        }
+    }
 }

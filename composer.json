@@ -47,6 +47,7 @@
         "test:php-testdox": "@test:php --testdox",
         "test:php-coverage": "@test:php --coverage-html coverage",
         "test:php:unit": "@test:php --testsuite Unit",
-        "test:php:integration": "@test:php --testsuite Integration"
+        "test:php:integration": "@test:php --testsuite Integration",
+        "test:js": "yarn run vue-cli-service test:unit"
     }
 }

@@ -21,7 +21,7 @@ class HomeController extends Controller
             $response,
             'layouts/home.twig',
             [
-                'name' => 'Jim',
+                'name' => 'Friend',
                 'csrf' => Helpers::generateCSRFData($this->csrf, $request)
             ]
         );

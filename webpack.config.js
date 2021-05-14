@@ -30,8 +30,13 @@ module.exports = (env, options) => {
         module: {
             rules: [
                 {
+                    test: /\.(js)$/,
+                    exclude: /node_modules/,
+                    use: ['babel-loader'],
+                },
+                {
                     test: /\.vue$/,
-                    loader: 'vue-loader',
+                    use: ['vue-loader'],
                 },
                 {
                     test: /\.s[ac]ss$/,

@@ -1,6 +1,4 @@
-# Spindle
-
-An easy to use [Slim 4](https://www.slimframework.com/) starter project for server side apps.
+# Spindle – A [Slim 4](https://www.slimframework.com/) starter project
 
 [![Test PHP](https://github.com/SebKay/spindle/actions/workflows/test-php.yml/badge.svg)](https://github.com/SebKay/spindle/actions/workflows/test-php.yml)
 
